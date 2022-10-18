@@ -1,5 +1,7 @@
 <footer>
-	<img src="homeBtn.png" alt="" />
+	<a href="/">
+		<img src="homeBtn.png" alt="" />
+	</a>
 	<div class="rect" />
 </footer>
 
@@ -17,10 +19,10 @@
 		width: 100%;
 		position: fixed;
 		bottom: 0%;
-		background-color: green;
+		background-color: #107200;
 		z-index: 1;
 	}
-	img {
+	a {
 		z-index: 2;
 	}
 </style>
