@@ -4,13 +4,31 @@
 	import authStore from 'src/stores/authStore';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
+	import profileStore from 'src/stores/firestoreStore';
 
 	$: if (browser && $authStore.loaded && !$authStore.isLoggedIn) goto('/auth');
+	$: {
+		switch ($profileStore.papel) {
+			case 'prof':
+				goto('/prof');
+				break;
+			case 'aluno':
+				goto('/aluno');
+				break;
+			case 'educaindigena':
+				goto('/educaindigena');
+				break;
+		}
+	}
 </script>
 
 <Header />
 <main>
-	<slot><!-- optional fallback --></slot>
+	{#if $authStore.loaded}
+		<slot />
+	{:else}
+		<p>loading...</p>
+	{/if}
 </main>
 <Footer />
 

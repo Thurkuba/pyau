@@ -3,16 +3,13 @@
 	// import Auth from '../components/Auth.svelte';
 	import authStore from 'src/stores/authStore';
 	import { auth } from 'src/lib/services/firebase';
-	const signOut = () => {
-		auth.signOut();
-	};
+	import profileStore from 'src/stores/firestoreStore';
 </script>
 
 <h1>boraí !</h1>
 <Button path="/teste" pathName="teste!" />
 <!-- <Auth /> -->
-{#if $authStore.isLoggedIn}
-	{$authStore.user?.email}
-{/if}
+<p>nome: {$profileStore.nome}</p>
+
+<p>papel: {$profileStore.papel}</p>
 <br />
-<button on:click={signOut}> sign Out </button>

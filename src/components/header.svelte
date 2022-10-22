@@ -1,9 +1,19 @@
+<script>
+	import { auth } from 'src/lib/services/firebase';
+
+	const signOut = () => {
+		auth.signOut();
+	};
+</script>
+
 <header>
 	<nav>
 		<a href="/">
 			<h2>Pyau</h2>
 			<img src="pyauIcon.png" alt="ícone de sol" />
 		</a>
+
+		<button on:click={signOut}> sign Out </button>
 	</nav>
 </header>
 
