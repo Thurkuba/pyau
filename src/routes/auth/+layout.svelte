@@ -15,7 +15,7 @@
 {#if $authStore.loaded && !$authStore.isLoggedIn}
 	<main>
 		<div class="content">
-			<h1>{title}</h1>
+			<!-- <h1>{title}</h1> -->
 			<slot />
 		</div>
 	</main>

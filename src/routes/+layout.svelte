@@ -4,22 +4,13 @@
 	import authStore from 'src/stores/authStore';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
-	import profileStore from 'src/stores/firestoreStore';
 
 	$: if (browser && $authStore.loaded && !$authStore.isLoggedIn) goto('/auth');
-	// $: {
-	// 	switch ($profileStore.papel) {
-	// 		case 'prof':
-	// 			goto('/prof');
-	// 			break;
-	// 		case 'aluno':
-	// 			goto('/aluno');
-	// 			break;
-	// 		case 'educaindigena':
-	// 			goto('/educaindigena');
-	// 			break;
-	// 	}
-	// }
+
+	// onMount(() => {
+	// 	if (browser && $authStore.loaded && !$authStore.isLoggedIn) alert('teste');
+	// 	// goto('/auth');
+	// });
 </script>
 
 <Header />

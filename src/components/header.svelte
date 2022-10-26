@@ -1,6 +1,7 @@
 <script>
 	import { auth } from 'src/lib/services/firebase';
 	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 
 	let open = false;
 	const signOut = () => {
@@ -13,7 +14,7 @@
 
 <header>
 	<nav>
-		<a href="/">
+		<a class="title" href="/">
 			<h2>Pyau</h2>
 			<img src="pyauIcon.png" alt="ícone de sol" />
 		</a>
@@ -38,6 +39,14 @@
 					open = false;
 				}}
 			>
+				<p
+					on:click={() => {
+						goto('/perfil');
+					}}
+				>
+					perfil
+				</p>
+
 				<p on:click={signOut}>sair</p>
 			</div>
 		{/if}
@@ -60,7 +69,7 @@
 		align-items: center;
 		position: relative;
 		/* flex-direction: ; */
-		a {
+		.title {
 			display: inline-flex;
 			align-items: center;
 			gap: 10px;
@@ -103,6 +112,7 @@
 			padding: 8px 12px;
 			cursor: pointer;
 			text-align: center;
+			color: black;
 			&:hover {
 				background-color: var(--green-secondary);
 			}
