@@ -1,5 +1,4 @@
 <script>
-	import MenuBurger from './menuBurger.svelte';
 	import { auth } from 'src/lib/services/firebase';
 	import { page } from '$app/stores';
 
@@ -22,6 +21,9 @@
 				<button
 					on:click={() => {
 						open = !open;
+					}}
+					on:focusout={() => {
+						open = false;
 					}}
 				>
 					<img src="menuIcon.png" alt="" />

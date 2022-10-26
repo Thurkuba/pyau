@@ -7,7 +7,7 @@
 </script>
 
 <h1>boraí !</h1>
-<Button path="/teste" pathName="teste!" />
+<Button path="/" pathName="teste!" />
 <!-- <Auth /> -->
 <p>nome: {$profileStore.nome}</p>
 
