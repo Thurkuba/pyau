@@ -7,6 +7,8 @@
 		auth.signOut();
 		open = !open;
 	};
+
+	const clickOutside = () => open && (open = false);
 </script>
 
 <header>
@@ -19,11 +21,8 @@
 		{#if $page.url.pathname !== '/auth'}
 			<div class="menuBurger">
 				<button
-					on:click={() => {
+					on:click|stopPropagation={() => {
 						open = !open;
-					}}
-					on:focusout={() => {
-						open = false;
 					}}
 				>
 					<img src="menuIcon.png" alt="" />
@@ -33,12 +32,19 @@
 			</div>
 		{/if}
 		{#if open}
-			<div class="openMenu">
+			<div
+				class="openMenu"
+				on:blur={() => {
+					open = false;
+				}}
+			>
 				<p on:click={signOut}>sair</p>
 			</div>
 		{/if}
 	</nav>
 </header>
+
+<svelte:window on:click={clickOutside} />
 
 <style lang="scss">
 	header {
