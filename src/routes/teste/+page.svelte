@@ -30,5 +30,6 @@
 <Inner on:message={handleMessage} />
 
 <hr />
-<h1>Input</h1>
-<Input {name} />
+<!-- <h1>Input</h1> -->
+<!-- <Input {name} /> -->
+<a href="/teste/motion"> motion </a>
