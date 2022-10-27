@@ -1,5 +1,5 @@
 <script lang="ts">
-	import profileStore from 'src/stores/firestoreStore';
+	import profileStore from 'src/stores/profileStore';
 	import { goto } from '$app/navigation';
 
 	$: {
@@ -16,10 +16,3 @@
 		}
 	}
 </script>
-
-<!-- <h1>boraí !</h1> -->
-<!-- <Button path="/" pathName="teste!" /> -->
-<!-- <p>nome: {$profileStore.nome}</p> -->
-
-<!-- <p>papel: {$profileStore.papel}</p> -->
-<!-- <br /> -->

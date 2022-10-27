@@ -1,5 +1,5 @@
 <script>
-	import profileStore from 'src/stores/firestoreStore';
+	import profileStore from 'src/stores/profileStore';
 </script>
 
 <h1>perfil</h1>

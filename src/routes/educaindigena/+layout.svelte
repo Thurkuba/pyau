@@ -1,5 +1,5 @@
 <script>
-	import profileStore from 'src/stores/firestoreStore';
+	import profileStore from 'src/stores/profileStore';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
 

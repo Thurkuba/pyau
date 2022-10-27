@@ -26,5 +26,4 @@ auth.onAuthStateChanged(async (user) => {
 		}
 	}
 });
-
 export default profileStore;
