@@ -1,8 +1,9 @@
 <script lang="ts">
+	import { fly } from 'svelte/transition';
 	export let title: string;
 </script>
 
-<div class="box">
+<div class="box" in:fly={{ y: 50, duration: 1000 }}>
 	<p>{title}</p>
 	<slot />
 </div>

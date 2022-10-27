@@ -1,20 +1,30 @@
 <script lang="ts">
+	import { fly } from 'svelte/transition';
+
 	export let nomeguarani: string;
-
 	export let nomept: string;
-
-	export let descricao: string;
-
-	export let imagem: string;
+	// export let descricao: string;
+	// export let imagem: string;
 </script>
 
-<div class="container">{nomeguarani}{nomept}{descricao}{imagem}</div>
+<div class="container" in:fly={{ y: 100, duration: 1500 }}>
+	<p>
+		{nomeguarani}
+	</p>
+	<p>
+		{nomept}
+	</p>
+</div>
 
 <style>
 	.container {
 		border: 1px solid black;
-		/* width: 64px; */
-		/* height: 64px; */
+		width: 64px;
+		height: 64px;
 		border-radius: 8px;
+	}
+	p {
+		margin: 4px;
+		text-align: center;
 	}
 </style>

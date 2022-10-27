@@ -3,7 +3,7 @@
 	import CardMemo from 'src/components/cardMemo.svelte';
 	import { getCards, memoStore } from 'src/stores/memoStore';
 	const breadcrumbItems = { text: 'Jogo das Memórias', path: '/educaindigena' };
-
+	import { fly } from 'svelte/transition';
 	getCards();
 	console.log($memoStore);
 
