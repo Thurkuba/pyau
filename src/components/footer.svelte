@@ -1,6 +1,10 @@
+<script>
+	import homeBtn from '$lib/assets/homeBtn.png';
+</script>
+
 <footer>
 	<a href="/">
-		<img src="homeBtn.png" alt="" />
+		<img src={homeBtn} alt="" />
 	</a>
 	<div class="rect" />
 </footer>

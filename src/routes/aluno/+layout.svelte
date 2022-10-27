@@ -9,5 +9,5 @@
 {#if $profileStore.papel == 'aluno'}
 	<slot />
 {:else}
-	nao...
+	redirecionando...
 {/if}

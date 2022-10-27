@@ -48,5 +48,6 @@
 		padding: 4px;
 		width: 100%;
 		height: 40px;
+		max-width: 400px;
 	}
 </style>

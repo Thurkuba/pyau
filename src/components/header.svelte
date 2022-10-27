@@ -2,8 +2,10 @@
 	import { auth } from 'src/lib/services/firebase';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-
+	import logo from '$lib/assets/pyauIcon.png';
+	import menuIcon from '$lib/assets/menuIcon.png';
 	let open = false;
+
 	const signOut = () => {
 		auth.signOut();
 		open = !open;
@@ -16,7 +18,7 @@
 	<nav>
 		<a class="title" href="/">
 			<h2>Pyau</h2>
-			<img src="pyauIcon.png" alt="ícone de sol" />
+			<img src={logo} alt="ícone de sol" />
 		</a>
 
 		{#if $page.url.pathname !== '/auth'}
@@ -26,7 +28,7 @@
 						open = !open;
 					}}
 				>
-					<img src="menuIcon.png" alt="" />
+					<img src={menuIcon} alt="" />
 				</button>
 
 				<!-- <MenuBurger /> -->
