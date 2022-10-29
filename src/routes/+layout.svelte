@@ -4,16 +4,21 @@
 	import authStore from 'src/stores/authStore';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 
+	let showHeader = true;
+
+	$: pathname = $page.url.pathname;
 	$: if (browser && $authStore.loaded && !$authStore.isLoggedIn) goto('/auth');
-
-	// onMount(() => {
-	// 	if (browser && $authStore.loaded && !$authStore.isLoggedIn) alert('teste');
-	// 	// goto('/auth');
-	// });
+	$: {
+		if (pathname === '/educaindigena/memorias/add') showHeader = false;
+		else showHeader = true;
+	}
 </script>
 
-<Header />
+{#if showHeader}
+	<Header />
+{/if}
 <main>
 	{#if $authStore.loaded}
 		<slot />
@@ -21,12 +26,15 @@
 		<p>loading...</p>
 	{/if}
 </main>
-<Footer />
+
+{#if showHeader}
+	<Footer />
+{/if}
 
 <style lang="scss">
 	main {
 		/* width: 100%; */
-		height: 1000px;
+		height: 100%;
 		overflow: hidden;
 		padding: 12px 16px;
 	}

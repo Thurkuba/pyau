@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { auth } from 'src/lib/services/firebase';
 	import { signInWithEmailAndPassword } from 'firebase/auth';
+
+	let email: string;
+	let senha: string;
+
 	const handleSubmit = async (e: Event) => {
 		e.preventDefault();
 		await signInWithEmailAndPassword(auth, email, senha);
 	};
-	let email: string;
-	let senha: string;
 </script>
 
 <form on:submit={handleSubmit}>

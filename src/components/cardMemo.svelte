@@ -7,14 +7,16 @@
 	// export let imagem: string;
 </script>
 
-<div class="container" in:fly={{ y: 100, duration: 1500 }}>
-	<p>
-		{nomeguarani}
-	</p>
-	<p>
-		{nomept}
-	</p>
-</div>
+<a href="/educaindigena/memorias/{nomeguarani}">
+	<div class="container" in:fly={{ y: 100, duration: 1500 }}>
+		<p>
+			{nomeguarani}
+		</p>
+		<p>
+			{nomept}
+		</p>
+	</div>
+</a>
 
 <style>
 	.container {
