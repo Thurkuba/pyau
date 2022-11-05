@@ -2,6 +2,7 @@
 	import closeIcon from '$lib/assets/closeIcon.png';
 	import { createCard } from 'src/stores/memoStore';
 	import type { Carta } from 'src/stores/memoStore';
+	import CardMemo from 'src/components/cardMemo.svelte';
 
 	let cartaData: Carta = {
 		nomeguarani: '',
@@ -10,12 +11,26 @@
 		imagem: ''
 	};
 
-	const handleSubmit = async (e: Event) => {
+	let open = false;
+	const handleOpen = async (e: Event) => {
 		e.preventDefault();
-		console.log('tentando criar carta', cartaData);
+		open = true;
+	};
+
+	const handleSubmit = async (e: Event) => {
+		// e.preventDefault();
+		console.log('criando carta', cartaData);
 		await createCard(cartaData);
 	};
+
+	const handleClose = () => {
+		open = false;
+	};
 </script>
+
+{#if open}
+	<CardMemo {...cartaData} submit={true} on:close={handleClose} on:submit={handleSubmit} />
+{/if}
 
 <div class="container">
 	<div class="close">
@@ -24,7 +39,7 @@
 		</a>
 	</div>
 
-	<form on:submit={handleSubmit}>
+	<form on:submit={handleOpen}>
 		<label for="text">
 			nome da carta (guarani)
 			<input type="text" bind:value={cartaData.nomeguarani} />
@@ -47,9 +62,6 @@
 </div>
 
 <style lang="scss">
-	.container {
-	}
-
 	.close {
 		display: flex;
 		align-items: center;
@@ -60,13 +72,13 @@
 			height: 20px;
 		}
 	}
-	label {
-		margin: 8px 0;
-	}
-	input {
-		display: block;
-		border: 0;
-		border-bottom: 1px solid black;
-		margin: 8px 0 12px;
-	}
+	/* label { */
+	/* 	margin: 8px 0; */
+	/* } */
+	/* input { */
+	/* 	display: block; */
+	/* 	border: 0; */
+	/* 	border-bottom: 1px solid black; */
+	/* 	margin: 8px 0 12px; */
+	/* } */
 </style>

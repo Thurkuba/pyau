@@ -34,7 +34,7 @@
 <style lang="scss">
 	main {
 		/* width: 100%; */
-		height: 100%;
+		/* height: 100%; */
 		overflow: hidden;
 		padding: 12px 16px;
 	}
