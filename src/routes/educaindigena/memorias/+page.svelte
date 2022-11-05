@@ -5,10 +5,7 @@
 	import CardAdd from 'src/components/cardAdd.svelte';
 	import { getCards, memoStore } from 'src/stores/memoStore';
 	const breadcrumbItems = { text: 'Jogo das Memórias', path: '/educaindigena' };
-	import { fly } from 'svelte/transition';
 
-	// getCards();
-	// $: $memoStore.loaded;
 	$: if (!$memoStore.loaded) getCards();
 
 	let cardOpen = false;

@@ -3,6 +3,7 @@
 	import { createCard } from 'src/stores/memoStore';
 	import type { Carta } from 'src/stores/memoStore';
 	import CardMemo from 'src/components/cardMemo.svelte';
+	import Button from 'src/components/button.svelte';
 
 	let cartaData: Carta = {
 		nomeguarani: '',
@@ -57,7 +58,9 @@
 			<input type="text" bind:value={cartaData.imagem} />
 		</label>
 
-		<button type="submit">criar carta</button>
+		<div class="btn-container">
+			<Button text="criar carta" on:click={handleOpen} />
+		</div>
 	</form>
 </div>
 
@@ -72,13 +75,4 @@
 			height: 20px;
 		}
 	}
-	/* label { */
-	/* 	margin: 8px 0; */
-	/* } */
-	/* input { */
-	/* 	display: block; */
-	/* 	border: 0; */
-	/* 	border-bottom: 1px solid black; */
-	/* 	margin: 8px 0 12px; */
-	/* } */
 </style>

@@ -5,6 +5,7 @@
 	import { goto } from '$app/navigation';
 	import addIcon from '$lib/assets/addIcon.png';
 	import Close from 'src/components/close.svelte';
+	import Button from './button.svelte';
 
 	export let nomeguarani: string;
 	export let nomept: string;
@@ -70,14 +71,16 @@
 					</p>
 				</div>
 				{#if submit}
-					<button on:click={handleSubmit}>criar carta</button>
+					<Button on:click={handleSubmit} text="criar carta" />
 				{:else}
 					<div class="btn-container">
-						<button
+						<Button on:click={handleDelete} text="deletar" secondary />
+						<Button
 							on:click={() => {
 								edit = true;
-							}}>edit</button
-						>
+							}}
+							text="editar carta"
+						/>
 					</div>
 				{/if}
 			{:else}
@@ -100,13 +103,14 @@
 					</label>
 
 					<div class="btn-container">
-						<button
+						<Button
 							on:click={() => {
 								edit = false;
-							}}>cancelar</button
-						>
-						<button on:click={handleDelete}>deletar</button>
-						<button type="submit">confirmar</button>
+							}}
+							text="cancelar"
+							secondary
+						/>
+						<Button type="submit" text="confirmar" />
 					</div>
 				</form>
 			{/if}

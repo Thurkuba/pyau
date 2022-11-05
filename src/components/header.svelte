@@ -2,6 +2,7 @@
 	import { auth } from 'src/lib/services/firebase';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
+	import { fly } from 'svelte/transition';
 	import logo from '$lib/assets/pyauIcon.png';
 	import menuIcon from '$lib/assets/menuIcon.png';
 	let open = false;
@@ -37,6 +38,7 @@
 		{#if open}
 			<div
 				class="openMenu"
+				transition:fly={{ y: 32, duration: 800 }}
 				on:blur={() => {
 					open = false;
 				}}
@@ -102,6 +104,7 @@
 	}
 	.openMenu {
 		position: absolute;
+		width: 120px;
 		top: 40px;
 		right: 16px;
 		background-color: var(--green-background);
@@ -110,6 +113,7 @@
 		min-width: 64px;
 
 		p {
+			font-size: 20px;
 			margin: 0;
 			padding: 8px 12px;
 			cursor: pointer;
