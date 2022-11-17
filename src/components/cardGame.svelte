@@ -1,8 +1,9 @@
-<script>
+<script lang="ts">
 	import cardMemorias from '$lib/assets/cardMemorias.png';
+	export let path: string;
 </script>
 
-<a href="/educaindigena/memorias">
+<a href={path}>
 	<img src={cardMemorias} alt="jogo das memórias" />
 </a>
 

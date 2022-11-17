@@ -12,8 +12,8 @@
 <style lang="scss">
 	.container {
 		border: 1px solid black;
-		width: 64px;
-		height: 64px;
+		width: 60px;
+		height: 70px;
 		box-sizing: border-box;
 		padding: 12px;
 		border-radius: 8px;

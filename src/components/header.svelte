@@ -1,14 +1,18 @@
 <script>
 	import { auth } from 'src/lib/services/firebase';
 	import { page } from '$app/stores';
+	import authStore from 'src/stores/authStore';
 	import { goto } from '$app/navigation';
 	import { fly } from 'svelte/transition';
 	import logo from '$lib/assets/pyauIcon.png';
 	import menuIcon from '$lib/assets/menuIcon.png';
+
+	import { signOut } from 'src/stores/profileStore';
 	let open = false;
 
-	const signOut = () => {
-		auth.signOut();
+	const handleSignOut = () => {
+		signOut();
+
 		open = !open;
 	};
 
@@ -22,7 +26,7 @@
 			<img src={logo} alt="ícone de sol" />
 		</a>
 
-		{#if $page.url.pathname !== '/auth'}
+		{#if $authStore.loaded && $authStore.isLoggedIn}
 			<div class="menuBurger">
 				<button
 					on:click|stopPropagation={() => {
@@ -51,7 +55,7 @@
 					perfil
 				</p>
 
-				<p on:click={signOut}>sair</p>
+				<p on:click={handleSignOut}>sair</p>
 			</div>
 		{/if}
 	</nav>

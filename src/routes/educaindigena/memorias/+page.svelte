@@ -44,7 +44,7 @@
 <div class="cartas">
 	<CardAdd />
 	{#if $memoStore.loaded}
-		{#each $memoStore.cartas as card}
+		{#each $memoStore.cartas as card (card.id)}
 			<MiniCardMemo
 				nomeguarani={card.nomeguarani}
 				nomept={card.nomept}

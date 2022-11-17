@@ -34,8 +34,8 @@
 <style>
 	.container-mini {
 		border: 1px solid black;
-		width: 64px;
-		height: 64px;
+		width: 60px;
+		height: 70px;
 		border-radius: 8px;
 		cursor: pointer;
 	}

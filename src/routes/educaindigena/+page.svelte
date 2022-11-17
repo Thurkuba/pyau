@@ -7,5 +7,5 @@
 <h3>ka'aruju, {$profileStore.nome} !</h3>
 
 <Box title="criar conteúdo">
-	<CardGame />
+	<CardGame path="/educaindigena/memorias" />
 </Box>

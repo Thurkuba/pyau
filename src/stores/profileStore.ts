@@ -6,10 +6,12 @@ import { doc, getDoc } from 'firebase/firestore';
 export type ProfileStore = {
 	nome: string;
 	papel: string;
+	uid: string;
 };
 const profileStore = writable<ProfileStore>({
 	nome: '',
-	papel: ''
+	papel: '',
+	uid: ''
 });
 
 auth.onAuthStateChanged(async (user) => {
@@ -21,9 +23,20 @@ auth.onAuthStateChanged(async (user) => {
 		if (docSnap.exists()) {
 			profileStore.set({
 				nome: docSnap.data().nome,
-				papel: docSnap.data().papel
+				papel: docSnap.data().papel,
+				uid: userId
 			});
 		}
 	}
 });
-export default profileStore;
+
+const signOut = () => {
+	auth.signOut();
+	console.log('signing out');
+	profileStore.set({
+		nome: '',
+		papel: '',
+		uid: ''
+	});
+};
+export { profileStore, signOut };

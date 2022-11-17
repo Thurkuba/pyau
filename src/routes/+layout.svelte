@@ -9,7 +9,7 @@
 	let showHeader = true;
 
 	$: pathname = $page.url.pathname;
-	$: if (browser && $authStore.loaded && !$authStore.isLoggedIn) goto('/auth');
+	// $: if (browser && $authStore.loaded && !$authStore.isLoggedIn) goto('/');
 	$: {
 		if (pathname === '/educaindigena/memorias/add') showHeader = false;
 		else showHeader = true;
