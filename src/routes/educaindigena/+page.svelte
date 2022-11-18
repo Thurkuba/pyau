@@ -1,6 +1,6 @@
 <script>
 	import Box from 'src/components/box.svelte';
-	import profileStore from 'src/stores/profileStore';
+	import { profileStore } from 'src/stores/profileStore';
 	import CardGame from 'src/components/cardGame.svelte';
 </script>
 
