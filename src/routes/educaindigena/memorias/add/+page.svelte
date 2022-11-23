@@ -9,7 +9,8 @@
 		nomeguarani: '',
 		nomept: '',
 		descricao: '',
-		imagem: ''
+		imagem: '',
+		id: ''
 	};
 
 	let open = false;

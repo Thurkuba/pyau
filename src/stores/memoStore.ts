@@ -9,9 +9,17 @@ export type Carta = {
 	imagem: string;
 	id: string;
 };
+
+export type MapCarta = {
+	[id: string]: Carta;
+};
+
+export type MapCarta2 = Record<string, Carta>;
+
 export type MemoStore = {
 	cartas: Carta[];
 	loaded: boolean;
+	mapCarta: MapCarta;
 };
 
 const cardsRef = collection(db, 'jogos/memoria/cartas');
@@ -19,30 +27,37 @@ const cardsRef = collection(db, 'jogos/memoria/cartas');
 const resetStore = () => {
 	memoStore.set({
 		loaded: false,
-		cartas: []
+		cartas: [],
+		mapCarta: {}
 	});
 };
 
 const memoStore = writable<MemoStore>({
 	cartas: [],
-	loaded: false
+	loaded: false,
+	mapCarta: {}
 });
 
 const getCards = async () => {
 	const querySnapshot = await getDocs(collection(db, 'jogos/memoria/cartas'));
 	let array: Carta[] = [];
+	let map: MapCarta = {};
 	querySnapshot.forEach((doc) => {
-		array.push({
+		let cardId = doc.id;
+		const cardInfo: Carta = {
 			nomeguarani: doc.data()['nome-guarani'],
 			nomept: doc.data()['nome-pt'],
 			descricao: doc.data().descricao,
 			imagem: doc.data().imagem,
 			id: doc.id
-		});
-		memoStore.set({
-			cartas: array,
-			loaded: true
-		});
+		};
+		array.push(cardInfo);
+		map[doc.id] = cardInfo;
+	});
+	memoStore.set({
+		cartas: array,
+		loaded: true,
+		mapCarta: map
 	});
 };
 
