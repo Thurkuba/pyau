@@ -9,6 +9,7 @@
 	getActivities();
 
 	let activityOpen = false;
+	$: activityOpen;
 	let atividadeProps = {
 		nome: 'yo',
 		pin: '',

@@ -16,7 +16,7 @@
 	export let submit: boolean = false;
 	export let edit: boolean = false;
 
-	let editNomeguarani = nomeguarani;
+	let editNomeguarani: string = nomeguarani;
 	let editNomept = nomept;
 	let editDescricao = descricao;
 	let editImagem = imagem;
@@ -74,7 +74,7 @@
 					<Button on:click={handleSubmit} text="criar carta" />
 				{:else}
 					<div class="btn-container">
-						<Button on:click={handleDelete} text="deletar" secondary />
+						<!-- <Button on:click={handleDelete} text="deletar" secondary /> -->
 						<Button
 							on:click={() => {
 								edit = true;

@@ -35,6 +35,7 @@
 	"type": "module",
 	"dependencies": {
 		"@sveltejs/adapter-static": "^1.0.0-next.44",
-		"firebase": "^9.11.0"
+		"firebase": "^9.11.0",
+		"svelte-confetti-explosion": "^0.4.0"
 	}
 }

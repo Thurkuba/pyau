@@ -88,10 +88,13 @@ const getActivities = async () => {
 			timestamp: doc.data().timestamp,
 			prof: profStore.uid
 		});
-		activitiesStore.set({
-			atividades: array,
-			loaded: true
-		});
+	});
+	array.sort((a, b) => {
+		return b.timestamp - a.timestamp;
+	});
+	activitiesStore.set({
+		atividades: array,
+		loaded: true
 	});
 };
 
@@ -114,5 +117,13 @@ const createActivity = async (data: Atividade) => {
 		loaded: false
 	});
 };
+
+// const deleteActivity = async (id: string) => {
+// 	const docRef = doc('atividades', id);
+// 	const res = await deleteDoc(docRef);
+// activityStore.update({
+// 	loaded: false
+// });
+// };
 
 export { activitiesStore, getActivities, activityStore, getActivity, createActivity };

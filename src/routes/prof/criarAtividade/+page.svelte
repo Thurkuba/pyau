@@ -3,8 +3,8 @@
 	import { getCards, memoStore } from 'src/stores/memoStore';
 	import { createActivity } from 'src/stores/activitiesStore';
 	import type { Atividade } from 'src/stores/activitiesStore';
+	import { goto } from '$app/navigation';
 
-	$: if (!$memoStore.loaded) getCards();
 	$: cardsLen = $memoStore.cartas.length;
 	$: selectedCards = new Array(cardsLen).fill(false);
 	$: cartas = $memoStore.cartas;
@@ -33,13 +33,13 @@
 	};
 
 	const handleSubmit = async () => {
-		console.log('criando atividade');
 		cardsFilter();
 		await createActivity(atividade);
+		goto('/');
 	};
 </script>
 
-<h2>add atividade</h2>
+<h2>criar atividade</h2>
 
 <form>
 	<label for="text">
@@ -68,8 +68,8 @@
 	</label>
 </form>
 
-{selectedCards}
-<button on:click={handleSubmit}>add</button>
+<!-- {selectedCards} -->
+<button on:click={handleSubmit}>criar</button>
 
 <style>
 	.cartas {
