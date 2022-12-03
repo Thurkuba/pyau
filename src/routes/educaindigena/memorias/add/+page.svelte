@@ -1,9 +1,18 @@
 <script lang="ts">
+	import {
+		getDownloadURL,
+		ref,
+		uploadBytes,
+		uploadBytesResumable,
+		type UploadTask
+	} from 'firebase/storage';
 	import closeIcon from '$lib/assets/closeIcon.png';
 	import { createCard } from 'src/stores/memoStore';
 	import type { Carta } from 'src/stores/memoStore';
 	import CardMemo from 'src/components/cardMemo.svelte';
 	import Button from 'src/components/button.svelte';
+	import { storage } from 'src/lib/services/firebase';
+	import { getFileExtension } from 'src/lib/helpers/file';
 
 	let cartaData: Carta = {
 		nomeguarani: '',
@@ -17,6 +26,52 @@
 	const handleOpen = async (e: Event) => {
 		e.preventDefault();
 		open = true;
+	};
+
+	let files: FileList;
+	$: {
+		const file = files?.[0];
+		if (file) uploadImage(file);
+	}
+
+	let task: UploadTask;
+	let progress = 0;
+	let status: 'running' | 'paused' | 'success' | 'canceled' | 'error' | '' = '';
+	$: {
+		task?.on(
+			'state_changed',
+			(snapshot) => {
+				progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+				status = snapshot.state;
+			},
+			(error) => {
+				switch (error.code) {
+					case 'storage/canceled':
+						console.log('Download cancelado');
+						break;
+					default:
+						console.log('Deu ruim:', error.code);
+						break;
+				}
+			},
+			() => {
+				status = 'success';
+				getDownloadURL(task.snapshot.ref).then((url) => {
+					cartaData.imagem = url;
+				});
+			}
+		);
+	}
+
+	const uploadImage = async (file: File) => {
+		if (!file) {
+			alert('Arquivo não encontrado!');
+			return;
+		}
+		const ext = getFileExtension(file.name);
+		const fileName = `${Date.now()}.${ext}`;
+		const fileRef = ref(storage, `memoria/${fileName}`);
+		task = uploadBytesResumable(fileRef, file);
 	};
 
 	const handleSubmit = async (e: Event) => {
@@ -56,7 +111,14 @@
 		</label>
 		<label for="text">
 			imagem
-			<input type="text" bind:value={cartaData.imagem} />
+			<input type="file" accept="image/*" bind:files />
+			{#if status === 'running'}
+				<p>Fazendo upload... {progress.toFixed(0)}%</p>
+			{:else if status === 'success'}
+				<p>Upload completo!</p>
+			{:else if status === 'error'}
+				<p>Erro com o upload... =/</p>
+			{/if}
 		</label>
 
 		<div class="btn-container">

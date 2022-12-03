@@ -3,6 +3,7 @@
 
 	export let path: string = '';
 	export let text: string = '';
+	export let type: string = '';
 	export let secondary: boolean = false;
 
 	const dispatch = createEventDispatcher();
@@ -17,7 +18,7 @@
 		{text}
 	</a>
 {:else}
-	<button on:click={handleClick} class:secondary>{text}</button>
+	<button {type} on:click={handleClick} class:secondary>{text}</button>
 {/if}
 
 <style>

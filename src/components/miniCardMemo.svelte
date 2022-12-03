@@ -23,6 +23,7 @@
 </script>
 
 <div class="container-mini" in:fly={{ y: 100, duration: 1500 }} on:click={handleClick}>
+	<img src={imagem} alt={nomeguarani} />
 	<p>
 		{nomeguarani}
 	</p>
@@ -38,6 +39,7 @@
 		height: 70px;
 		border-radius: 8px;
 		cursor: pointer;
+		overflow: hidden;
 	}
 	p {
 		margin: 4px;

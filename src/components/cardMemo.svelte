@@ -3,9 +3,11 @@
 	import { createEventDispatcher } from 'svelte';
 	import { editCard, deleteCard } from 'src/stores/memoStore';
 	import { goto } from '$app/navigation';
-	import addIcon from '$lib/assets/addIcon.png';
 	import Close from 'src/components/close.svelte';
 	import Button from './button.svelte';
+	import { getDownloadURL, ref, uploadBytesResumable, type UploadTask } from 'firebase/storage';
+	import { getFileExtension } from 'src/lib/helpers/file';
+	import { storage } from 'src/lib/services/firebase';
 
 	export let nomeguarani: string;
 	export let nomept: string;
@@ -20,6 +22,52 @@
 	let editNomept = nomept;
 	let editDescricao = descricao;
 	let editImagem = imagem;
+
+	let files: FileList;
+	$: {
+		const file = files?.[0];
+		if (file) uploadImage(file);
+	}
+
+	let task: UploadTask;
+	let progress = 0;
+	let status: 'running' | 'paused' | 'success' | 'canceled' | 'error' | '' = '';
+	$: {
+		task?.on(
+			'state_changed',
+			(snapshot) => {
+				progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+				status = snapshot.state;
+			},
+			(error) => {
+				switch (error.code) {
+					case 'storage/canceled':
+						console.log('Download cancelado');
+						break;
+					default:
+						console.log('Deu ruim:', error.code);
+						break;
+				}
+			},
+			() => {
+				status = 'success';
+				getDownloadURL(task.snapshot.ref).then((url) => {
+					editImagem = url;
+				});
+			}
+		);
+	}
+
+	const uploadImage = async (file: File) => {
+		if (!file) {
+			alert('Arquivo não encontrado!');
+			return;
+		}
+		const ext = getFileExtension(file.name);
+		const fileName = `${Date.now()}.${ext}`;
+		const fileRef = ref(storage, `memoria/${fileName}`);
+		task = uploadBytesResumable(fileRef, file);
+	};
 
 	const dispatch = createEventDispatcher();
 
@@ -36,8 +84,8 @@
 	const handleEdit = async (e: Event) => {
 		e.preventDefault();
 		await editCard(id, {
-			'nome-guarani': editNomeguarani,
-			'nome-pt': editNomept,
+			nomeguarani: editNomeguarani,
+			nomept: editNomept,
 			descricao: editDescricao,
 			imagem: editImagem,
 			id: id
@@ -59,7 +107,7 @@
 			{#if !edit}
 				<div class="image-container">
 					<div class="image">
-						<img src={addIcon} alt="'imagem de {nomept}'" />
+						<img src={imagem} alt="'imagem de {nomept}'" />
 					</div>
 				</div>
 				<div class="text-container">
@@ -99,7 +147,14 @@
 					</label>
 					<label for="text">
 						imagem
-						<input type="text" bind:value={editImagem} />
+						<input type="file" accept="image/*" bind:files />
+						{#if status === 'running'}
+							<p>Fazendo upload... {progress.toFixed(0)}%</p>
+						{:else if status === 'success'}
+							<p>Upload completo!</p>
+						{:else if status === 'error'}
+							<p>Erro com o upload... =/</p>
+						{/if}
 					</label>
 
 					<div class="btn-container">
