@@ -17,7 +17,7 @@
 </script>
 
 {#if showHeader}
-	<Header />
+	<Header back="" />
 {/if}
 <main>
 	{#if $authStore.loaded}
