@@ -1,84 +1,82 @@
-<script>
+<script lang="ts" context="module">
+	export type CartaMem = { src: string; matched: boolean; id?: number };
+</script>
+
+<script lang="ts">
+	import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
+	import { db } from 'src/lib/services/firebase';
+	import { content } from 'src/stores/anonymousStore';
+
+	import type { Carta } from 'src/stores/memoStore';
+
 	import SingleCard from './singleCard.svelte';
 
 	let imgCover =
 		'https://raw.githubusercontent.com/iamshaunjp/React-Firebase/lesson-58/magic-memory/public/img/cover.png';
-	let imgHelmet =
-		'https://raw.githubusercontent.com/iamshaunjp/React-Firebase/lesson-58/magic-memory/public/img/helmet-1.png';
-	let imgPotion =
-		'https://raw.githubusercontent.com/iamshaunjp/React-Firebase/lesson-58/magic-memory/public/img/potion-1.png';
-	let imgRing =
-		'https://raw.githubusercontent.com/iamshaunjp/React-Firebase/lesson-58/magic-memory/public/img/ring-1.png';
-	let imgScroll =
-		'https://raw.githubusercontent.com/iamshaunjp/React-Firebase/lesson-58/magic-memory/public/img/scroll-1.png';
-	let imgShield =
-		'https://raw.githubusercontent.com/iamshaunjp/React-Firebase/lesson-58/magic-memory/public/img/shield-1.png';
-	let imgSword =
-		'https://raw.githubusercontent.com/iamshaunjp/React-Firebase/lesson-58/magic-memory/public/img/sword-1.png';
 
-	const cardImages = [
-		{ src: imgHelmet, matched: false },
-		{ src: imgPotion, matched: false },
-		{ src: imgRing, matched: false },
-		{ src: imgScroll, matched: false },
-		{ src: imgShield, matched: false },
-		{ src: imgSword, matched: false }
-	];
+	export let cartas: Carta[] = [];
+	export let pin: string;
 
-	let cards = [];
+	let cartasMem: CartaMem[] = [];
+	$: {
+		cartasMem = cartas?.map((c) => ({ src: c.imagem, matched: false })) ?? [];
+		if (cartasMem.length) shuffledCards();
+	}
+
+	let cards: CartaMem[] = [];
 	let turns = 0;
-	let choiceOne = null;
-	let choiceTwo = null;
+	let choiceOne: CartaMem | null = null;
+	let choiceTwo: CartaMem | null = null;
 	let disabled = false;
 
-	// shuffle cards
 	const shuffledCards = () => {
-		const shuffledCards = [...cardImages, ...cardImages]
+		const shuffledCards = [...cartasMem, ...cartasMem]
 			.sort(() => Math.random() - 0.5)
 			.map((card) => ({ ...card, id: Math.random() }));
 		cards = shuffledCards;
 		turns = 0;
 	};
 
-	// 	handle a choice
-	const handleChoice = (card) => {
-		choiceOne ? (choiceTwo = card) : (choiceOne = card);
+	const handleChoice = (carta: CartaMem) => {
+		choiceOne ? (choiceTwo = carta) : (choiceOne = carta);
 	};
 
-	// 	compare 2 selected cards
-	$: if (choiceOne && choiceTwo) {
-		disabled = true;
-		if (choiceOne.src === choiceTwo.src) {
-			console.log('those cards match');
-			cards = cards.map((card) => {
-				if (card.src === choiceOne.src) {
-					return { ...card, matched: true };
-				} else {
-					return card;
-				}
-			});
-			resetTurn();
-		} else {
-			console.log('those cards do not match');
-			setTimeout(() => resetTurn(), 1000);
+	$: {
+		if (choiceOne && choiceTwo) {
+			disabled = true;
+			const srcOne = choiceOne.src;
+			const srcTwo = choiceTwo.src;
+			if (srcOne === srcTwo) {
+				cards = cards.map((card) => {
+					if (card.src === srcOne) return { ...card, matched: true };
+					else return card;
+				});
+				resetTurn();
+			} else {
+				setTimeout(() => resetTurn(), 1000);
+			}
 		}
 	}
 
-	$: console.log(cards);
-
-	// 	start a game automatically
-	$: shuffledCards();
-
-	// reset choices & increase turn
 	const resetTurn = () => {
 		choiceOne = null;
 		choiceTwo = null;
 		turns = turns + 1;
 		disabled = false;
 	};
+
+	$: {
+		if (cards.length && cards.every((c) => c.matched)) {
+			setTimeout(async () => {
+				const docRef = doc(db, 'atividades', pin);
+				await updateDoc(docRef, { completo: arrayUnion($content) });
+				alert('Yay o/');
+			}, 600);
+		}
+	}
 </script>
 
-<div class="App">
+<div class="jogo">
 	<h1>Magic Match</h1>
 	<button on:click={shuffledCards}> New Game </button>
 	<div class="card-grid">
@@ -93,13 +91,12 @@
 		{/each}
 	</div>
 	<p>
-		Turns: {turns}
+		Turnos: {turns}
 	</p>
 </div>
-/style>
 
 <style>
-	.App {
+	.jogo {
 		max-width: 860px;
 		margin: 0 auto;
 		background: #1b1523;

@@ -12,9 +12,10 @@ const config = {
 			pages: 'build',
 			assets: 'build',
 			fallback: '',
+			fallback: '200.html',
 			precompress: false
 		}),
-
+		prerender: { entries: [] },
 		alias: { src: 'src' }
 	}
 };

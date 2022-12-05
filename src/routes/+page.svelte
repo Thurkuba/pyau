@@ -23,7 +23,7 @@
 		e.preventDefault();
 		getActivity(pin);
 		console.log('--> atividade ', pin);
-		goto('/atividade');
+		goto(`/atividade/${pin}`);
 	};
 </script>
 

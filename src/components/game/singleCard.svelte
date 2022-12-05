@@ -1,9 +1,11 @@
-<script>
-	export let card;
-	export let imgCover;
-	export let handleChoice;
-	export let flipped;
-	export let disabled;
+<script lang="ts">
+	import type { CartaMem } from './memoryGame.svelte';
+
+	export let card: CartaMem;
+	export let imgCover: string;
+	export let handleChoice: (c: CartaMem) => void;
+	export let flipped: boolean;
+	export let disabled: boolean;
 
 	const handleClick = () => {
 		if (!disabled) {
@@ -14,8 +16,8 @@
 
 <div class="card">
 	<div class:flipped>
-		<img src={card.src} class="front" alt="card front" />
-		<img src={imgCover} class="back" on:click={handleClick} alt="card back" />
+		<img src={card.src} class="front" alt={card.src} />
+		<img src={imgCover} class="back" on:click={handleClick} alt="Segredo" />
 	</div>
 </div>
 
