@@ -1,32 +1,62 @@
-<script>
-	import homeBtn from '$lib/assets/homeBtn.png';
+<script lang="ts" context="module">
+	export type FooterActions = {
+		confirm?: { texto: string; onclick: () => void };
+		back?: { to: string; onclick?: () => void };
+	};
+</script>
+
+<script lang="ts">
+	import Home from 'src/components/icons/home.svelte';
+	import Back from './icons/back.svelte';
+
+	export let actions: FooterActions = {};
+	let back: FooterActions['back'];
+	let confirm: FooterActions['confirm'];
+	$: {
+		back = actions?.back;
+		confirm = actions?.confirm;
+	}
+
+	$: withActions = back || confirm;
 </script>
 
 <footer>
-	<a href="/">
-		<img src={homeBtn} alt="" />
-	</a>
-	<div class="rect" />
+	{#if withActions}
+		<a class="back" href={back?.to || '#'} on:click={back?.onclick}>
+			<Back />
+		</a>
+		<a class="confirm" href={'#'} on:click={confirm?.onclick}>
+			{confirm?.texto ?? 'continuar'}
+		</a>
+	{:else}
+		<a class="home" href="/">
+			<Home />
+		</a>
+	{/if}
 </footer>
 
-<style>
+<style lang="scss">
 	footer {
 		position: fixed;
+		padding: 16px;
+		box-sizing: border-box;
+		background-color: var(--primary);
 		bottom: 0;
 		width: 100%;
-		height: 44px;
+		height: 80px;
 		display: flex;
 		justify-content: center;
-	}
-	.rect {
-		height: 24px;
-		width: 100%;
-		position: fixed;
-		bottom: 0%;
-		background-color: #107200;
-		z-index: 1;
-	}
-	a {
-		z-index: 2;
+		align-items: center;
+		a {
+      @include simple-button;
+			&.home,
+			&.back {
+				width: 48px;
+			}
+			&.confirm {
+				margin-left: 10px;
+				flex: 1;
+			}
+		}
 	}
 </style>

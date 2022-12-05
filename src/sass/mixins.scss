@@ -1,0 +1,10 @@
+@mixin simple-button {
+	font-size: 20px;
+	border: 1px solid var(--secondary);
+	color: var(--white-g);
+	border-radius: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 48px;
+}

@@ -28,7 +28,9 @@
 </main>
 
 {#if showHeader}
-	<Footer />
+	<Footer
+		actions={{ back: { to: '/' }, confirm: { texto: 'bora', onclick: () => alert('bora!') } }}
+	/>
 {/if}
 
 <style lang="scss">
