@@ -2,7 +2,7 @@
 	import MiniCardMemo from 'src/components/miniCardMemo.svelte';
 	import { memoStore } from 'src/stores/memoStore';
 	import { createActivity } from 'src/stores/activitiesStore';
-	import type { Atividade } from 'src/stores/activitiesStore';
+	import type { Atividade } from 'src/types/atividade';
 	import { goto } from '$app/navigation';
 
 	$: cardsLen = $memoStore.cartas.length;

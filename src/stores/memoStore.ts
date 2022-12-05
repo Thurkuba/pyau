@@ -1,20 +1,11 @@
 import { writable } from 'svelte/store';
 import { db } from 'src/lib/services/firebase';
 import { collection, doc, getDocs, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
-
-export type Carta = {
-	nomeguarani: string;
-	nomept: string;
-	descricao: string;
-	imagem: string;
-	id: string;
-};
+import type { Carta } from 'src/types/memoria';
 
 export type MapCarta = {
 	[id: string]: Carta;
 };
-
-export type MapCarta2 = Record<string, Carta>;
 
 export type MemoStore = {
 	cartas: Carta[];
@@ -81,7 +72,7 @@ const editCard = async (id: string, data: Carta) => {
 
 const deleteCard = async (id: string) => {
 	const docRef = doc(cardsRef, id);
-	 await deleteDoc(docRef);
+	await deleteDoc(docRef);
 	resetStore();
 };
 

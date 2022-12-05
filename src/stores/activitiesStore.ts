@@ -2,16 +2,7 @@ import { get, writable } from 'svelte/store';
 import { profileStore } from './profileStore';
 import { db } from 'src/lib/services/firebase';
 import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
-
-export type Atividade = {
-	nome: string;
-	jogo: string;
-	config: string[];
-	completo: string[];
-	pin: string;
-	timestamp: number;
-	prof: string;
-};
+import type { Atividade } from 'src/types/atividade';
 
 export type ActivitiesStore = {
 	atividades: Atividade[];

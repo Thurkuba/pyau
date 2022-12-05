@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 	import { createEventDispatcher } from 'svelte';
-	import type { Atividade } from 'src/stores/activitiesStore';
+	import type { Atividade } from 'src/types/atividade';
 	import { getCards, memoStore } from 'src/stores/memoStore';
 	// import { goto } from '$app/navigation';
 	// import addIcon from '$lib/assets/addIcon.png';

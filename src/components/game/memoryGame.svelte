@@ -6,8 +6,7 @@
 	import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
 	import { db } from 'src/lib/services/firebase';
 	import { content } from 'src/stores/anonymousStore';
-
-	import type { Carta } from 'src/stores/memoStore';
+	import type { Carta } from 'src/types/memoria';
 
 	import SingleCard from './singleCard.svelte';
 

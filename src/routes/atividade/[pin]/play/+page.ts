@@ -1,6 +1,6 @@
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from 'src/lib/services/firebase';
-import type { Carta } from 'src/stores/memoStore';
+import type { Carta } from 'src/types/memoria';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ parent }) => {

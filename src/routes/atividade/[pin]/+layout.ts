@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from 'src/lib/services/firebase';
-import type { Atividade } from 'src/stores/activitiesStore';
+import type { Atividade } from 'src/types/atividade';
 import type { LayoutLoad } from './$types';
 
 export const load: LayoutLoad = async ({ params }) => {

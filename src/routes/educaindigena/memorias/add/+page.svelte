@@ -2,7 +2,7 @@
 	import { getDownloadURL, ref, uploadBytesResumable, type UploadTask } from 'firebase/storage';
 	import closeIcon from '$lib/assets/closeIcon.png';
 	import { createCard } from 'src/stores/memoStore';
-	import type { Carta } from 'src/stores/memoStore';
+	import type { Carta } from 'src/types/memoria';
 	import CardMemo from 'src/components/cardMemo.svelte';
 	import Button from 'src/components/button.svelte';
 	import { storage } from 'src/lib/services/firebase';

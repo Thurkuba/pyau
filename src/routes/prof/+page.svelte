@@ -5,17 +5,18 @@
 	import CardActivity from 'src/components/cardActivity.svelte';
 	import { activitiesStore, getActivities } from 'src/stores/activitiesStore';
 	import { profileStore } from 'src/stores/profileStore';
+	import type { Atividade } from 'src/types/atividade';
 
 	getActivities();
 
 	let activityOpen = false;
 	$: activityOpen;
-	let atividadeProps = {
+	let atividadeProps: Atividade = {
 		nome: 'yo',
 		pin: '',
 		completo: [],
 		config: [],
-		jogo: '',
+		jogo: 'memoria',
 		prof: '',
 		timestamp: 0
 	};

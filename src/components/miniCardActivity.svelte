@@ -1,5 +1,6 @@
 <script lang="ts">
-	import type { Atividade } from 'src/stores/activitiesStore';
+	import type { Atividade } from 'src/types/atividade';
+
 	import { createEventDispatcher } from 'svelte';
 	export let atividade: Atividade;
 
