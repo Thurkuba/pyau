@@ -2,9 +2,36 @@
 	font-size: 20px;
 	border: 1px solid var(--secondary);
 	color: var(--white-g);
+	background-color: var(--primary);
 	border-radius: 8px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	height: 48px;
+	cursor: pointer;
+}
+
+@mixin text-input($align: center, $size: 'medium', $status: 'normal') {
+	border-radius: 8px;
+	background-color: white;
+	text-align: $align;
+	color: var(--text);
+	height: 48px;
+
+	@if $status == 'warn' {
+		border: 2px solid var(--warn);
+	} @else {
+		border: none;
+	}
+
+	@if $size == 'small' {
+		font-size: 16px;
+	} @else {
+		font-size: 20px;
+	}
+
+	&::placeholder {
+		color: var(--placeholder);
+		opacity: 1;
+	}
 }

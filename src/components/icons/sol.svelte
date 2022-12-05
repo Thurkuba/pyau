@@ -25,5 +25,6 @@
 	svg {
 		position: relative;
 		display: inline-block;
+		box-sizing: border-box;
 	}
 </style>

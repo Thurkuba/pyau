@@ -25,7 +25,6 @@
 </script>
 
 <Box alignCenter>
-	<h3>Insira o código da atividade</h3>
 	<form>
 		<label for="text">
 			<input type="text" bind:value={pin} placeholder="código PIN" />
@@ -34,14 +33,18 @@
 	<button on:click={handlePinSubmit}>buscar atividade</button>
 </Box>
 
-<a href="/auth">login educador(a)</a>
-
-<style>
-	input {
-		background-color: white;
-		border: 1px solid transparent;
-		box-shadow: 0 0 2px 2px #00000020;
-		border-radius: 4px;
-		text-align: center;
+<style lang="scss">
+	form {
+		width: 100%;
+		label {
+			input {
+				@include text-input;
+				width: 100%;
+			}
+		}
+	}
+	button {
+		@include simple-button;
+		width: 100%;
 	}
 </style>

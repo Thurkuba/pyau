@@ -4,12 +4,18 @@
 	import Sol from 'src/components/icons/sol.svelte';
 	import Back from 'src/components/icons/back.svelte';
 	import MenuBurguer from 'src/components/nav/menuBurguer.svelte';
-	import MenuMobile from './nav/menuMobile.svelte';
+	import MenuMobile from 'src/components/nav/menuMobile.svelte';
 
 	export let large = false;
 	export let back = '';
 
 	let open = false;
+
+	$: {
+		if (large) {
+			document.documentElement.style.setProperty('--header-h', '160px');
+		}
+	}
 
 	const clickOutside = () => open && (open = false);
 </script>
@@ -22,7 +28,7 @@
 			</a>
 		{/if}
 		<a class="logo" href="/">
-			<Sol size={large ? '125px' : '35px'} />
+			<Sol size="100%" />
 		</a>
 
 		{#if $authStore.loaded && $authStore.isLoggedIn}
@@ -40,10 +46,12 @@
 	header {
 		width: 100%;
 		position: relative;
+		height: var(--header-h);
 		nav {
-			box-sizing: border-box;
 			width: 100%;
+			height: 100%;
 			padding: 16px;
+			box-sizing: border-box;
 			background-color: var(--primary);
 			display: grid;
 			grid-template-columns: 1fr 1fr 1fr;
@@ -58,6 +66,8 @@
 				align-items: center;
 				justify-content: center;
 				grid-area: logo;
+				box-sizing: border-box;
+				height: 80%;
 			}
 			.menu {
 				grid-area: menu;

@@ -1,13 +1,13 @@
 <script lang="ts" context="module">
 	export type FooterActions = {
-		confirm?: { texto: string; onclick: () => void };
-		back?: { to: string; onclick?: () => void };
+		confirm?: { texto: string; onclick: (() => void) | string };
+		back?: { onclick?: (() => void) | string };
 	};
 </script>
 
 <script lang="ts">
 	import Home from 'src/components/icons/home.svelte';
-	import Back from './icons/back.svelte';
+	import Back from 'src/components/icons/back.svelte';
 
 	export let actions: FooterActions = {};
 	let back: FooterActions['back'];
@@ -22,10 +22,20 @@
 
 <footer>
 	{#if withActions}
-		<a class="back" href={back?.to || '#'} on:click={back?.onclick}>
-			<Back />
-		</a>
-		<a class="confirm" href={'#'} on:click={confirm?.onclick}>
+		{#if back}
+			<a
+				class="back"
+				href={typeof back?.onclick === 'string' ? back.onclick : '#'}
+				on:click={typeof back?.onclick === 'function' ? back.onclick : undefined}
+			>
+				<Back />
+			</a>
+		{/if}
+		<a
+			class="confirm"
+			href={typeof confirm?.onclick === 'string' ? confirm.onclick : '#'}
+			on:click={typeof confirm?.onclick === 'function' ? confirm.onclick : undefined}
+		>
 			{confirm?.texto ?? 'continuar'}
 		</a>
 	{:else}
@@ -43,12 +53,12 @@
 		background-color: var(--primary);
 		bottom: 0;
 		width: 100%;
-		height: 80px;
+		height: var(--footer-h);
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		a {
-      @include simple-button;
+			@include simple-button;
 			&.home,
 			&.back {
 				width: 48px;

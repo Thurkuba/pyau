@@ -1,3 +1,5 @@
 :root {
 	--overflow-main: auto;
+	--footer-h: 80px;
+	--header-h: 80px;
 }

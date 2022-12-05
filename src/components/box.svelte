@@ -11,21 +11,19 @@
 	<slot />
 </div>
 
-<style>
+<style lang="scss">
 	div {
 		border-radius: 8px;
-		padding: 12px;
-		background-color: var(--green-background);
-		margin-bottom: 32px;
-	}
-	.center {
-		padding-top: 4px;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
+		padding: 16px;
+		background-color: var(--secondary);
+		&.center {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
 
-	p {
-		margin: 0px 0 12px 0;
+		p {
+			margin: 0px 0 12px 0;
+		}
 	}
 </style>

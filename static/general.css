@@ -38,5 +38,5 @@ input {
 }
 
 #svelte {
-	overflow: var(--overflow-main);
+	overflow: hidden;
 }

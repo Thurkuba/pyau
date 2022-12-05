@@ -1,6 +1,6 @@
 <script>
-	import Header from '../components/header.svelte';
-	import Footer from '../components/footer.svelte';
+	import Header from 'src/components/layout/header.svelte';
+	import Footer from 'src/components/layout/footer.svelte';
 	import authStore from 'src/stores/authStore';
 	// import { browser } from '$app/environment';
 	// import { goto } from '$app/navigation';
@@ -17,7 +17,7 @@
 </script>
 
 {#if showHeader}
-	<Header back="" />
+	<Header back="" large />
 {/if}
 <main>
 	{#if $authStore.loaded}
@@ -28,16 +28,16 @@
 </main>
 
 {#if showHeader}
-	<Footer
-		actions={{ back: { to: '/' }, confirm: { texto: 'bora', onclick: () => alert('bora!') } }}
-	/>
+	<Footer actions={{ confirm: { texto: 'login', onclick: '/auth' } }} />
 {/if}
 
 <style lang="scss">
 	main {
-		/* width: 100%; */
-		/* height: 100%; */
-		overflow: hidden;
-		padding: 12px 16px;
+		width: 100%;
+		height: calc(100% - var(--footer-h) - var(--header-h));
+		box-sizing: border-box;
+		background-color: var(--primary);
+		overflow: var(--overflow-main);
+		padding: 16px 24px;
 	}
 </style>
