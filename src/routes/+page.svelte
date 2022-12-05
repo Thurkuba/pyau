@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { profileStore } from 'src/stores/profileStore';
-	import { getActivity } from 'src/stores/activitiesStore';
 	import authStore from 'src/stores/authStore';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
@@ -21,8 +20,6 @@
 
 	const handlePinSubmit = async (e: Event) => {
 		e.preventDefault();
-		getActivity(pin);
-		console.log('--> atividade ', pin);
 		goto(`/atividade/${pin}`);
 	};
 </script>

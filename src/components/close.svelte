@@ -8,7 +8,7 @@
 	};
 </script>
 
-<div class="close-container" on:click={handleClose}>
+<div class="close-container" on:keyup={handleClose} on:click={handleClose}>
 	<div class="close">
 		<img src={closeIcon} alt="ícone de fechar" />
 	</div>

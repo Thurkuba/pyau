@@ -1,6 +1,6 @@
 <script lang="ts">
 	import MiniCardMemo from 'src/components/miniCardMemo.svelte';
-	import { getCards, memoStore } from 'src/stores/memoStore';
+	import { memoStore } from 'src/stores/memoStore';
 	import { createActivity } from 'src/stores/activitiesStore';
 	import type { Atividade } from 'src/stores/activitiesStore';
 	import { goto } from '$app/navigation';
@@ -9,7 +9,7 @@
 	$: selectedCards = new Array(cardsLen).fill(false);
 	$: cartas = $memoStore.cartas;
 
-	const random: string = Math.random().toString(16).substr(2, 8);
+	const random: string = Math.random().toString(16).substring(2, 8);
 
 	let atividade: Atividade = {
 		nome: '',
@@ -22,9 +22,7 @@
 	};
 
 	const cardsFilter = () => {
-		const filtro = cartas.filter((item, i) => {
-			return selectedCards[i];
-		});
+		const filtro = cartas.filter((_, i) => selectedCards[i]);
 		const cardsIds = filtro.map((card) => card.id);
 		console.log('acabei', cardsIds);
 		atividade.config = cardsIds;

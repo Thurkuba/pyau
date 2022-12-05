@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
-	import { page } from '$app/stores';
+	// import { page } from '$app/stores';
 	import authStore from 'src/stores/authStore';
 
-	$: pathname = $page.url.pathname;
-	let title = '';
-	$: {
-		if (pathname === '/auth') title = 'login';
-	}
+	// $: pathname = $page.url.pathname;
+	// let title = '';
+	// $: {
+	// 	if (pathname === '/auth') title = 'login';
+	// }
 	$: if (browser && $authStore.loaded && $authStore.isLoggedIn) goto('/');
 </script>
 

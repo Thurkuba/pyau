@@ -2,8 +2,8 @@
 	import Header from '../components/header.svelte';
 	import Footer from '../components/footer.svelte';
 	import authStore from 'src/stores/authStore';
-	import { browser } from '$app/environment';
-	import { goto } from '$app/navigation';
+	// import { browser } from '$app/environment';
+	// import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 
 	let showHeader = true;

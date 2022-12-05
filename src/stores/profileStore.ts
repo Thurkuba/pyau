@@ -1,5 +1,4 @@
 import { writable } from 'svelte/store';
-import type firebase from 'firebase/database';
 import { auth, db } from 'src/lib/services/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 

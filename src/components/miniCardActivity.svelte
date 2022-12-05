@@ -12,7 +12,7 @@
 	};
 </script>
 
-<div class="container" on:click={handleClick}>
+<div class="container" on:keyup={handleClick} on:click={handleClick}>
 	<p>{atividade.nome} - {atividade.pin}</p>
 </div>
 

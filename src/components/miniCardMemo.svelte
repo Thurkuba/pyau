@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
-	import CardMemo from 'src/components/cardMemo.svelte';
 	import { createEventDispatcher } from 'svelte';
 
 	export let nomeguarani: string;
@@ -22,7 +21,12 @@
 	};
 </script>
 
-<div class="container-mini" in:fly={{ y: 100, duration: 1500 }} on:click={handleClick}>
+<div
+	class="container-mini"
+	in:fly={{ y: 100, duration: 1500 }}
+	on:keyup={handleClick}
+	on:click={handleClick}
+>
 	<img src={imagem} alt={nomeguarani} />
 	<p>
 		{nomeguarani}

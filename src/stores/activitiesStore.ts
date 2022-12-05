@@ -1,17 +1,7 @@
 import { get, writable } from 'svelte/store';
 import { profileStore } from './profileStore';
-import type firebase from 'firebase/database';
 import { db } from 'src/lib/services/firebase';
-import {
-	collection,
-	doc,
-	getDocs,
-	setDoc,
-	getDoc,
-	addDoc,
-	updateDoc,
-	deleteDoc
-} from 'firebase/firestore';
+import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
 
 export type Atividade = {
 	nome: string;
@@ -38,42 +28,8 @@ const activitiesStore = writable<ActivitiesStore>({
 	loaded: false
 });
 
-const activityStore = writable<ActivityStore>({
-	atividade: {
-		nome: '',
-		jogo: '',
-		config: [],
-		completo: [],
-		pin: '',
-		timestamp: 0,
-		prof: ''
-	},
-	loaded: false
-});
-
 const profStore = get(profileStore);
-const userId = profStore.uid;
 const collectionPath = 'atividades';
-
-const getActivity = async (pin: string) => {
-	const docRef = doc(db, 'atividades', pin);
-	const docSnap = await getDoc(docRef);
-
-	if (docSnap.exists()) {
-		activityStore.set({
-			atividade: {
-				nome: docSnap.data().nome,
-				jogo: docSnap.data().jogo,
-				config: docSnap.data().config,
-				completo: docSnap.data().completo,
-				pin: pin,
-				timestamp: docSnap.data().timestamp,
-				prof: docSnap.data().prof
-			},
-			loaded: true
-		});
-	}
-};
 
 const getActivities = async () => {
 	const querySnapshot = await getDocs(collection(db, collectionPath));
@@ -99,10 +55,8 @@ const getActivities = async () => {
 };
 
 const createActivity = async (data: Atividade) => {
-	const randomPin: string = Math.random().toString(16).substr(2, 5);
-	const docRef = await setDoc(doc(db, collectionPath, randomPin), {
-		// const docRef = await addDoc(collection(db, collectionPath), {
-		// imagem: data.imagem
+	const randomPin: string = Math.random().toString(16).substring(2, 5);
+	const atividade: Atividade = {
 		nome: data.nome,
 		config: data.config,
 		completo: data.completo,
@@ -110,12 +64,9 @@ const createActivity = async (data: Atividade) => {
 		jogo: data.jogo,
 		timestamp: Date.now(),
 		prof: profStore.uid
-	});
-	console.log(docRef);
-	activitiesStore.set({
-		atividades: [],
-		loaded: false
-	});
+	};
+	await setDoc(doc(db, collectionPath, randomPin), atividade);
+	activitiesStore.update((prev) => ({ ...prev, atividades: [...prev.atividades] }));
 };
 
 // const deleteActivity = async (id: string) => {
@@ -126,4 +77,4 @@ const createActivity = async (data: Atividade) => {
 // });
 // };
 
-export { activitiesStore, getActivities, activityStore, getActivity, createActivity };
+export { activitiesStore, getActivities, createActivity };

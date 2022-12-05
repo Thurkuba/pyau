@@ -43,7 +43,6 @@ const getCards = async () => {
 	let array: Carta[] = [];
 	let map: MapCarta = {};
 	querySnapshot.forEach((doc) => {
-		let cardId = doc.id;
 		const cardInfo: Carta = {
 			nomeguarani: doc.data()['nome-guarani'],
 			nomept: doc.data()['nome-pt'],
@@ -75,14 +74,14 @@ const createCard = async (data: Carta) => {
 const editCard = async (id: string, data: Carta) => {
 	const docRef = doc(cardsRef, id);
 	console.log('editando carta ', id, 'campos novos: ', data);
-	const res = await updateDoc(docRef, data);
+	await updateDoc(docRef, data);
 
 	resetStore();
 };
 
 const deleteCard = async (id: string) => {
 	const docRef = doc(cardsRef, id);
-	const res = await deleteDoc(docRef);
+	 await deleteDoc(docRef);
 	resetStore();
 };
 

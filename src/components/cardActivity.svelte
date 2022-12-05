@@ -3,19 +3,18 @@
 	import { createEventDispatcher } from 'svelte';
 	import type { Atividade } from 'src/stores/activitiesStore';
 	import { getCards, memoStore } from 'src/stores/memoStore';
-	import { goto } from '$app/navigation';
-	import addIcon from '$lib/assets/addIcon.png';
+	// import { goto } from '$app/navigation';
+	// import addIcon from '$lib/assets/addIcon.png';
 	import Close from 'src/components/close.svelte';
 	import MiniCardMemo from './miniCardMemo.svelte';
-	import Button from './button.svelte';
-	import { each } from 'svelte/internal';
+	// import Button from './button.svelte';
+	// import { each } from 'svelte/internal';
 
 	$: if (!$memoStore.loaded) getCards();
-	$: cardsLen = $memoStore.cartas.length;
-	$: selectedCards = new Array(cardsLen).fill(false);
-	$: cartas = $memoStore.cartas;
+	// $: cardsLen = $memoStore.cartas.length;
+	// $: selectedCards = new Array(cardsLen).fill(false);
+	// $: cartas = $memoStore.cartas;
 
-	console.log($memoStore.mapCarta);
 	export let atividade: Atividade;
 
 	const dispatch = createEventDispatcher();
@@ -24,11 +23,11 @@
 		dispatch('close');
 	};
 
-	const handleSubmit = () => {
-		dispatch('submit');
-		handleClose();
-		// goto('/educaindigena/memorias');
-	};
+	// const handleSubmit = () => {
+	// 	dispatch('submit');
+	// 	handleClose();
+	// goto('/educaindigena/memorias');
+	// };
 	// const handleDelete = async (e: Event) => {
 	// 	e.preventDefault();
 	// 	await deleteCard(id);
@@ -71,7 +70,7 @@
 		</div>
 	</div>
 
-	<div class="popupoutside" on:click={handleClose} />
+	<div class="popupoutside" on:keyup={handleClose} on:click={handleClose} />
 </div>
 
 <style lang="scss">
@@ -97,13 +96,13 @@
 	h2 {
 		margin-bottom: 12px;
 	}
-	.btn-container {
-		width: 100%;
-		margin: 20px 0 0 0;
-		display: flex;
-		justify-content: right;
-		gap: 8px;
-	}
+	/* .btn-container { */
+	/* 	width: 100%; */
+	/* 	margin: 20px 0 0 0; */
+	/* 	display: flex; */
+	/* 	justify-content: right; */
+	/* 	gap: 8px; */
+	/* } */
 	.popup {
 		position: absolute;
 		height: 100%;

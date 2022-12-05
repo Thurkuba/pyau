@@ -1,6 +1,4 @@
 <script>
-	import { auth } from 'src/lib/services/firebase';
-	import { page } from '$app/stores';
 	import authStore from 'src/stores/authStore';
 	import { goto } from '$app/navigation';
 	import { fly } from 'svelte/transition';
@@ -47,15 +45,9 @@
 					open = false;
 				}}
 			>
-				<p
-					on:click={() => {
-						goto('/perfil');
-					}}
-				>
-					perfil
-				</p>
+				<p on:keyup={() => goto('/perfil')} on:click={() => goto('/perfil')}>perfil</p>
 
-				<p on:click={handleSignOut}>sair</p>
+				<p on:keyup={handleSignOut} on:click={handleSignOut}>sair</p>
 			</div>
 		{/if}
 	</nav>

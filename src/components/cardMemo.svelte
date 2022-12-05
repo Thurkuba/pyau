@@ -1,7 +1,10 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 	import { createEventDispatcher } from 'svelte';
-	import { editCard, deleteCard } from 'src/stores/memoStore';
+	import {
+		editCard
+		// deleteCard
+	} from 'src/stores/memoStore';
 	import { goto } from '$app/navigation';
 	import Close from 'src/components/close.svelte';
 	import Button from './button.svelte';
@@ -93,11 +96,11 @@
 		handleClose();
 	};
 
-	const handleDelete = async (e: Event) => {
-		e.preventDefault();
-		await deleteCard(id);
-		handleClose();
-	};
+	// const handleDelete = async (e: Event) => {
+	// 	e.preventDefault();
+	// 	await deleteCard(id);
+	// 	handleClose();
+	// };
 </script>
 
 <div class="popup" transition:fade={{ duration: 500 }}>
@@ -172,7 +175,7 @@
 		</div>
 	</div>
 
-	<div class="popupoutside" on:click={handleClose} />
+	<div class="popupoutside" on:keyup={handleClose} on:click={handleClose} />
 </div>
 
 <style lang="scss">

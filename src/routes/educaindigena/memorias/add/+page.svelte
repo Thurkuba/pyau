@@ -1,11 +1,5 @@
 <script lang="ts">
-	import {
-		getDownloadURL,
-		ref,
-		uploadBytes,
-		uploadBytesResumable,
-		type UploadTask
-	} from 'firebase/storage';
+	import { getDownloadURL, ref, uploadBytesResumable, type UploadTask } from 'firebase/storage';
 	import closeIcon from '$lib/assets/closeIcon.png';
 	import { createCard } from 'src/stores/memoStore';
 	import type { Carta } from 'src/stores/memoStore';
@@ -74,8 +68,7 @@
 		task = uploadBytesResumable(fileRef, file);
 	};
 
-	const handleSubmit = async (e: Event) => {
-		// e.preventDefault();
+	const handleSubmit = async () => {
 		console.log('criando carta', cartaData);
 		await createCard(cartaData);
 	};

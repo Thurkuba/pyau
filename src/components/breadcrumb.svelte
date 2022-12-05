@@ -1,10 +1,10 @@
 <script lang="ts">
 	import voltaIcon from '$lib/assets/voltaIcon.png';
-	type BreadcrumbItems = {
-		text: string;
-		path: string;
-		sub: string | null;
-	};
+	// type BreadcrumbItems = {
+	// 	text: string;
+	// 	path: string;
+	// 	sub: string | null;
+	// };
 	export let text: string = '';
 	export let path: string = '/';
 	export let sub: string = '';

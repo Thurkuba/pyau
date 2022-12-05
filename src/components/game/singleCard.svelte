@@ -17,7 +17,7 @@
 <div class="card">
 	<div class:flipped>
 		<img src={card.src} class="front" alt={card.src} />
-		<img src={imgCover} class="back" on:click={handleClick} alt="Segredo" />
+		<img src={imgCover} class="back" on:keyup={handleClick} on:click={handleClick} alt="Segredo" />
 	</div>
 </div>
 
