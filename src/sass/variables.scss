@@ -17,6 +17,7 @@
 	text-align: $align;
 	color: var(--text);
 	height: 48px;
+	width: 100%;
 
 	@if $status == 'warn' {
 		border: 2px solid var(--warn);
@@ -34,4 +35,13 @@
 		color: var(--placeholder);
 		opacity: 1;
 	}
+}
+
+/* z index */
+$z: ('menu', 'burger', 'overlay', 'modal');
+@function zidx($value) {
+	@if index($z, $value) {
+		@return index($z, $value);
+	}
+	@warn '#{$value} is not included in the $z list.';
 }

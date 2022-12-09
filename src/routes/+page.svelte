@@ -4,8 +4,16 @@
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import Box from 'src/components/box.svelte';
+	import { layoutControl } from 'src/stores/layoutStore';
 
 	let pin: string;
+
+	layoutControl.setHeader({ large: true, back: '' });
+	layoutControl.setFooter({
+		tipo: 'duplo',
+		btn1: { texto: 'explorar', efeito: '/' },
+		btn2: { texto: 'login', efeito: '/auth' }
+	});
 
 	$: if (browser && $authStore.loaded && $authStore.isLoggedIn) {
 		switch ($profileStore.papel) {

@@ -18,8 +18,8 @@
 	export let imagem: string;
 	export let id: string;
 
-	export let submit: boolean = false;
-	export let edit: boolean = false;
+	export let submit = false;
+	export let edit = false;
 
 	let editNomeguarani: string = nomeguarani;
 	let editNomept = nomept;
@@ -185,7 +185,7 @@
 		height: 70vh;
 		border-radius: 8px;
 		background-color: white;
-		z-index: 2;
+		z-index: zidx(modal);
 	}
 	.card {
 		padding: 0 16px 16px 16px;

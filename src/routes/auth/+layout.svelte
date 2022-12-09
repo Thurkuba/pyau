@@ -3,7 +3,10 @@
 	import { browser } from '$app/environment';
 	// import { page } from '$app/stores';
 	import authStore from 'src/stores/authStore';
+	import { layoutControl } from 'src/stores/layoutStore';
 
+	layoutControl.setFooter({ tipo: 'simples', btn1: { back: '/' } });
+	layoutControl.setHeader({ large: true, back: '' });
 	// $: pathname = $page.url.pathname;
 	// let title = '';
 	// $: {

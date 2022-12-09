@@ -32,7 +32,7 @@
 		height: 54px;
 		border: none;
 		border-radius: 28px;
-		z-index: 99;
+		z-index: zidx(burger);
 		svg {
 			cursor: pointer;
 

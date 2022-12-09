@@ -10,22 +10,18 @@
 	on:keyup
 	width={size}
 	height={size}
-	viewBox="0 0 20 20"
+	viewBox="0 0 29 43"
 	fill="none"
 	xmlns="http://www.w3.org/2000/svg"
 >
-	<path
-		{fill}
-		stroke={color}
-		d="M15 2.5L5 9.99352M15 17.5L5 10.0065"
-		stroke-width="2"
-		stroke-linecap="round"
-	/>
+	<rect x="0.5" y="0.5" width="22.2" height="32.7857" rx="3.5" {fill} stroke={color} />
+	<rect x="6.2998" y="9.71436" width="22.2" height="32.7857" rx="3.5" {fill} stroke={color} />
 </svg>
 
 <style>
 	svg {
 		position: relative;
 		display: inline-block;
+		box-sizing: border-box;
 	}
 </style>

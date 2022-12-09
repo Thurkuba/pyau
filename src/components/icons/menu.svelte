@@ -1,7 +1,5 @@
 <script>
-	export let color = '#ffffff';
-	export let filled = false;
-	export let fill = filled ? color : 'none';
+	export let fill = '#ffffff';
 	export let size = '1em';
 </script>
 
@@ -11,21 +9,18 @@
 	width={size}
 	height={size}
 	viewBox="0 0 20 20"
-	fill="none"
+	{fill}
 	xmlns="http://www.w3.org/2000/svg"
 >
-	<path
-		{fill}
-		stroke={color}
-		d="M15 2.5L5 9.99352M15 17.5L5 10.0065"
-		stroke-width="2"
-		stroke-linecap="round"
-	/>
+	<circle cx="10" cy="2.5" r="2" />
+	<circle cx="10" cy="10.5" r="2" />
+	<circle cx="10" cy="18.5" r="2" />
 </svg>
 
 <style>
 	svg {
 		position: relative;
 		display: inline-block;
+		box-sizing: border-box;
 	}
 </style>

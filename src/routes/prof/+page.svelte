@@ -35,18 +35,29 @@
 	};
 </script>
 
-<h3>ka'aruju, {$profileStore.nome} !</h3>
-<Box title="criar atividade">
+<h3>boas-vindas, {$profileStore.nome} !</h3>
+<Box outline title="criar atividade">
 	<CardGame path="/prof/criarAtividade" />
 </Box>
-{#if activityOpen}
-	<CardActivity atividade={atividadeProps} on:close={handleClose} />
-{/if}
 
-<Box title="atividades passadas">
+<Box outline title="todas as atividades">
 	{#if $activitiesStore.loaded}
 		{#each $activitiesStore.atividades as atividade}
 			<MiniCardActivity {atividade} on:click={handleOpen} />
 		{/each}
 	{/if}
 </Box>
+
+{#if activityOpen}
+	<CardActivity atividade={atividadeProps} on:close={handleClose} />
+{/if}
+
+<style lang="scss">
+	h3 {
+		font-weight: 400;
+		font-size: 20px;
+		line-height: 27px;
+		text-align: center;
+		color: var(--white-g);
+	}
+</style>

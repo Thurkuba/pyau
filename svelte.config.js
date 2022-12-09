@@ -6,14 +6,13 @@ const config = {
 	// Consult https://github.com/sveltejs/svelte-preprocess
 	// for more information about preprocessors
 	preprocess: preprocess({
-		scss: { prependData: '@use "src/sass/mixins.scss" as *;' }
+		scss: { prependData: '@use "src/sass/variables.scss" as *;' }
 	}),
 
 	kit: {
 		adapter: adapter({
 			pages: 'build',
 			assets: 'build',
-			fallback: '',
 			fallback: '200.html',
 			precompress: false
 		}),

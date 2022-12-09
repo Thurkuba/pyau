@@ -52,7 +52,7 @@
 		top: 0;
 		height: 100vh;
 		background-color: var(--white-g);
-		z-index: 90;
+		z-index: zidx(menu);
 		width: 150px;
 		box-sizing: border-box;
 		padding-top: 72px;
@@ -69,6 +69,10 @@
 
 				&:hover {
 					background-color: var(--secondary);
+				}
+				a {
+					display: flex;
+					width: 100%;
 				}
 			}
 		}

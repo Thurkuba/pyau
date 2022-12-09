@@ -12,9 +12,8 @@
 	let open = false;
 
 	$: {
-		if (large) {
-			document.documentElement.style.setProperty('--header-h', '160px');
-		}
+		if (large) document.documentElement.style.setProperty('--header-h', '220px');
+		else document.documentElement.style.setProperty('--header-h', '80px');
 	}
 
 	const clickOutside = () => open && (open = false);
@@ -28,7 +27,7 @@
 			</a>
 		{/if}
 		<a class="logo" href="/">
-			<Sol size="100%" />
+			<Sol />
 		</a>
 
 		{#if $authStore.loaded && $authStore.isLoggedIn}
@@ -50,7 +49,7 @@
 		nav {
 			width: 100%;
 			height: 100%;
-			padding: 16px;
+			padding: 12px 24px;
 			box-sizing: border-box;
 			background-color: var(--primary);
 			display: grid;
@@ -67,7 +66,12 @@
 				justify-content: center;
 				grid-area: logo;
 				box-sizing: border-box;
-				height: 80%;
+				height: 70%;
+				overflow: hidden;
+				:global(svg) {
+					width: 100%;
+					height: 100%;
+				}
 			}
 			.menu {
 				grid-area: menu;

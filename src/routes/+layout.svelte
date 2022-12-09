@@ -5,8 +5,12 @@
 	// import { browser } from '$app/environment';
 	// import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { layoutControl } from 'src/stores/layoutStore';
 
 	let showHeader = true;
+
+	$: header = $layoutControl.header;
+	$: footer = $layoutControl.footer;
 
 	$: pathname = $page.url.pathname;
 	// $: if (browser && $authStore.loaded && !$authStore.isLoggedIn) goto('/');
@@ -17,7 +21,7 @@
 </script>
 
 {#if showHeader}
-	<Header back="" large />
+	<Header back={header.back} large={header.large} />
 {/if}
 <main>
 	{#if $authStore.loaded}
@@ -28,13 +32,13 @@
 </main>
 
 {#if showHeader}
-	<Footer actions={{ confirm: { texto: 'login', onclick: '/auth' } }} />
+	<Footer footerControl={footer} />
 {/if}
 
 <style lang="scss">
 	main {
 		width: 100%;
-		height: calc(100% - var(--footer-h) - var(--header-h));
+		flex: 1;
 		box-sizing: border-box;
 		background-color: var(--primary);
 		overflow: var(--overflow-main);
