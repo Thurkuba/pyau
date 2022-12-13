@@ -7,6 +7,7 @@ type FnOrString = (() => void) | string;
 export type BtnInfo = {
 	texto?: string;
 	efeito?: FnOrString;
+	sombra?: boolean;
 };
 export type BtnInfoBack = { back?: FnOrString } & BtnInfo;
 
@@ -43,5 +44,3 @@ function createStore() {
 }
 
 export const layoutControl = createStore();
-
-layoutControl.subscribe(console.log);

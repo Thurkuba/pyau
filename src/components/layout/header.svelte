@@ -13,7 +13,7 @@
 
 	$: {
 		if (large) document.documentElement.style.setProperty('--header-h', '220px');
-		else document.documentElement.style.setProperty('--header-h', '80px');
+		else document.documentElement.style.setProperty('--header-h', '65px');
 	}
 
 	const clickOutside = () => open && (open = false);

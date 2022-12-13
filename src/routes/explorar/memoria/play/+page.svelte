@@ -1,12 +1,12 @@
 <script lang="ts">
 	import MemoryGame from 'src/components/game/memoryGame.svelte';
+	import { layoutControl } from 'src/stores/layoutStore';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	$: atividade = data.atividade;
 	$: cartas = data.cartas;
+
+	layoutControl.setFooter({ tipo: 'none' });
 </script>
 
-{#if atividade.jogo === 'memoria'}
-	<MemoryGame pin={atividade.pin} {cartas} />
-{/if}
+<MemoryGame {cartas} />

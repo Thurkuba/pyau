@@ -7,7 +7,7 @@
 	export { fC as footerControl };
 </script>
 
-<footer>
+<footer class:none={fC.tipo === 'none'}>
 	{#if fC.tipo === 'inicio'}
 		<a class="inicio" href="/">
 			<Home color="var(--secondary)" />
@@ -24,6 +24,7 @@
 		{/if}
 		{#if fC.btn1?.efeito}
 			<a
+				class:shadow={fC.btn1?.sombra}
 				class="btn"
 				href={typeof fC.btn1?.efeito === 'string' ? fC.btn1.efeito : '#'}
 				on:click={typeof fC.btn1?.efeito === 'function' ? fC.btn1.efeito : undefined}
@@ -34,6 +35,7 @@
 	{:else if fC.tipo === 'duplo'}
 		<div class="duplo">
 			<a
+				class:shadow={fC.btn1?.sombra}
 				class="btn"
 				href={typeof fC.btn1?.efeito === 'string' ? fC.btn1.efeito : '#'}
 				on:click={typeof fC.btn1?.efeito === 'function' ? fC.btn1.efeito : undefined}
@@ -41,6 +43,7 @@
 				{fC.btn1?.texto ?? 'continuar'}
 			</a>
 			<a
+				class:shadow={fC.btn2?.sombra}
 				class="btn"
 				href={typeof fC.btn2?.efeito === 'string' ? fC.btn2.efeito : '#'}
 				on:click={typeof fC.btn2?.efeito === 'function' ? fC.btn2.efeito : undefined}
@@ -54,7 +57,7 @@
 <style lang="scss">
 	footer {
 		position: relative;
-		padding: 24px;
+		padding: 16px 32px;
 		box-sizing: border-box;
 		background-color: var(--primary);
 		bottom: 0;
@@ -62,6 +65,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		z-index: zidx(footer);
 		a {
 			@include simple-button;
 			&.inicio,
@@ -73,6 +77,11 @@
 			}
 			&.btn {
 				margin-left: 10px;
+				flex-grow: 1;
+			}
+			&.shadow {
+				background: var(--secondary);
+				box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.1);
 			}
 		}
 		.duplo {
@@ -85,6 +94,9 @@
 				width: 100%;
 				margin-bottom: 10px;
 			}
+		}
+		&.none {
+			display: none;
 		}
 	}
 </style>

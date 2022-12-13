@@ -42,6 +42,7 @@
 		box-sizing: border-box;
 		background-color: var(--primary);
 		overflow: var(--overflow-main);
-		padding: 16px 24px;
+		padding: 16px 32px;
+		min-height: 300px;
 	}
 </style>

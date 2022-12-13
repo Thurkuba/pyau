@@ -11,7 +11,7 @@
 	layoutControl.setHeader({ large: true, back: '' });
 	layoutControl.setFooter({
 		tipo: 'duplo',
-		btn1: { texto: 'explorar', efeito: '/' },
+		btn1: { texto: 'explorar', efeito: '/explorar' },
 		btn2: { texto: 'login', efeito: '/auth' }
 	});
 

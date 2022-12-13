@@ -38,7 +38,7 @@
 }
 
 /* z index */
-$z: ('menu', 'burger', 'overlay', 'modal');
+$z: ('footer', 'menu', 'burger', 'overlay', 'modal');
 @function zidx($value) {
 	@if index($z, $value) {
 		@return index($z, $value);
