@@ -11,8 +11,7 @@ export const load: LayoutLoad = async () => {
 	querySnapshot.forEach((carta) => {
 		cartas.push(carta.data() as Carta);
 	});
-	console.log(cartas);
-	cartas = cartas.sort(() => Math.random() - 0.5).slice(0, 6);
-	console.log(cartas);
+	const numCards = Math.floor(Math.random() * 4) + 3;
+	cartas = cartas.sort(() => Math.random() - 0.5).slice(0, numCards);
 	return { cartas };
 };

@@ -6,6 +6,8 @@
 	export let handleChoice: (c: CartaMem) => void;
 	export let flipped: boolean;
 	export let disabled: boolean;
+	export let num: number;
+	export let idx: number;
 
 	const handleClick = () => {
 		if (!disabled) {
@@ -14,7 +16,14 @@
 	};
 </script>
 
-<div class="card">
+<div
+	class:seis={num === 6}
+	class:oito={num === 8}
+	class:dez={num === 10}
+	class:doze={num === 12}
+	class="card"
+	style={`grid-area: c${idx + 1};`}
+>
 	<div class:flipped>
 		<img src={card.src} class="front" alt={card.src} />
 		<div class="back" on:keyup={handleClick} on:click={handleClick} alt="Segredo">
@@ -26,8 +35,18 @@
 
 <style lang="scss">
 	.card {
+		grid-area: c;
 		position: relative;
-		height: clamp(80px, 17vh, 120px);
+		&.seis {
+			width: 120px;
+			height: 160px;
+		}
+		&.oito,
+		&.dez,
+		&.doze {
+			width: 90px;
+			height: 120px;
+		}
 		img {
 			width: 100%;
 			display: block;

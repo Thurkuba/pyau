@@ -2,6 +2,7 @@ import { writable } from 'svelte/store';
 import { db } from 'src/lib/services/firebase';
 import { collection, doc, getDocs, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import type { Carta } from 'src/types/memoria';
+import { omit } from 'lodash-es';
 
 export type MapCarta = {
 	[id: string]: Carta;
@@ -35,8 +36,8 @@ const getCards = async () => {
 	let map: MapCarta = {};
 	querySnapshot.forEach((doc) => {
 		const cardInfo: Carta = {
-			nomeguarani: doc.data()['nome-guarani'],
-			nomept: doc.data()['nome-pt'],
+			nomeguarani: doc.data().nomeguarani,
+			nomept: doc.data().nomept,
 			descricao: doc.data().descricao,
 			imagem: doc.data().imagem,
 			id: doc.id
@@ -53,8 +54,8 @@ const getCards = async () => {
 
 const createCard = async (data: Carta) => {
 	const docRef = await addDoc(collection(db, 'jogos/memoria/cartas'), {
-		'nome-guarani': data.nomeguarani,
-		'nome-pt': data.nomept,
+		nomeguarani: data.nomeguarani,
+		nomept: data.nomept,
 		descricao: data.descricao,
 		imagem: data.imagem
 	});
@@ -64,8 +65,9 @@ const createCard = async (data: Carta) => {
 
 const editCard = async (id: string, data: Carta) => {
 	const docRef = doc(cardsRef, id);
-	console.log('editando carta ', id, 'campos novos: ', data);
-	await updateDoc(docRef, data);
+	const newData = omit(data, ['id']);
+	console.log('editando carta ', id, 'campos novos: ', newData);
+	await updateDoc(docRef, newData);
 
 	resetStore();
 };

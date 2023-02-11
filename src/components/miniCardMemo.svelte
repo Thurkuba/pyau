@@ -28,25 +28,21 @@
 	on:click={handleClick}
 >
 	<img src={imagem} alt={nomeguarani} />
-	<p>
-		{nomeguarani}
-	</p>
-	<p>
-		{nomept}
-	</p>
 </div>
 
-<style>
+<style lang="scss">
 	.container-mini {
 		border: 1px solid black;
 		width: 60px;
-		height: 70px;
+		height: 80px;
+		border: 1px solid var(--secondary);
 		border-radius: 8px;
 		cursor: pointer;
 		overflow: hidden;
-	}
-	p {
-		margin: 4px;
-		text-align: center;
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
 	}
 </style>

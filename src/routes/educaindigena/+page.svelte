@@ -4,8 +4,20 @@
 	import CardGame from 'src/components/cardGame.svelte';
 </script>
 
-<h3>ka'aruju, {$profileStore.nome} !</h3>
+<h1>ka'aruju, {$profileStore.nome} !</h1>
 
-<Box title="criar conteúdo">
-	<CardGame path="/educaindigena/memorias" />
+<Box outline title="criar">
+	<CardGame texto="Carta" subtexto="jogo da memória" path="/educaindigena/memorias" />
 </Box>
+
+<style lang="scss">
+	h1 {
+		font-size: 20px;
+		font-weight: 400;
+		line-height: 27px;
+		letter-spacing: 0em;
+		color: var(--white-g);
+		text-align: center;
+		margin: 16px auto 32px auto;
+	}
+</style>

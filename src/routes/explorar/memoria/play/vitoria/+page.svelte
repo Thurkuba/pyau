@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CardMemo from 'src/components/cardMemo.svelte';
+	import CardMemo from 'src/components/modals/cardMemo.svelte';
 
 	import { layoutControl } from 'src/stores/layoutStore';
 	import type { Carta } from 'src/types/memoria';

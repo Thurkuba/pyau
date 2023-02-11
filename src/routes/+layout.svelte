@@ -2,38 +2,22 @@
 	import Header from 'src/components/layout/header.svelte';
 	import Footer from 'src/components/layout/footer.svelte';
 	import authStore from 'src/stores/authStore';
-	// import { browser } from '$app/environment';
-	// import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
 	import { layoutControl } from 'src/stores/layoutStore';
-
-	let showHeader = true;
 
 	$: header = $layoutControl.header;
 	$: footer = $layoutControl.footer;
-
-	$: pathname = $page.url.pathname;
-	// $: if (browser && $authStore.loaded && !$authStore.isLoggedIn) goto('/');
-	$: {
-		if (pathname === '/educaindigena/memorias/add') showHeader = false;
-		else showHeader = true;
-	}
 </script>
 
-{#if showHeader}
-	<Header back={header.back} large={header.large} />
-{/if}
+<Header back={header.back} large={header.large} />
 <main>
 	{#if $authStore.loaded}
 		<slot />
 	{:else}
-		<p>loading...</p>
+		<p>carregando...</p>
 	{/if}
 </main>
 
-{#if showHeader}
-	<Footer footerControl={footer} />
-{/if}
+<Footer footerControl={footer} />
 
 <style lang="scss">
 	main {
@@ -44,5 +28,7 @@
 		overflow: var(--overflow-main);
 		padding: 16px 32px;
 		min-height: 300px;
+		display: flex;
+		flex-direction: column;
 	}
 </style>

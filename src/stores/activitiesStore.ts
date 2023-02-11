@@ -1,7 +1,7 @@
 import { get, writable } from 'svelte/store';
 import { profileStore } from './profileStore';
 import { db } from 'src/lib/services/firebase';
-import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
 import type { Atividade } from 'src/types/atividade';
 
 export type ActivitiesStore = {
@@ -60,12 +60,22 @@ const createActivity = async (data: Atividade) => {
 	activitiesStore.update((prev) => ({ ...prev, atividades: [...prev.atividades] }));
 };
 
-// const deleteActivity = async (id: string) => {
-// 	const docRef = doc('atividades', id);
-// 	const res = await deleteDoc(docRef);
-// activityStore.update({
-// 	loaded: false
-// });
-// };
+const editActivity = async (id: string, data: Atividade) => {
+	const docRef = doc(db, 'atividades', id);
+	await updateDoc(docRef, data);
+	activitiesStore.set({
+		loaded: false,
+		atividades: []
+	});
+};
 
-export { activitiesStore, getActivities, createActivity };
+const deleteActivity = async (id: string) => {
+	const docRef = doc(db, 'atividades', id);
+	await deleteDoc(docRef);
+	activitiesStore.set({
+		loaded: false,
+		atividades: []
+	});
+};
+
+export { activitiesStore, getActivities, createActivity, editActivity, deleteActivity };

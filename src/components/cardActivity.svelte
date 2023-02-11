@@ -3,20 +3,14 @@
 	import { createEventDispatcher } from 'svelte';
 	import type { Atividade } from 'src/types/atividade';
 	import { getCards, memoStore } from 'src/stores/memoStore';
-	// import { goto } from '$app/navigation';
-	// import addIcon from '$lib/assets/addIcon.png';
 	import MiniCardMemo from './miniCardMemo.svelte';
 	import { clickOutside } from 'src/lib/actions/clickOutside';
 	import Close from 'src/components/icons/close.svelte';
 	import Sol from './icons/sol.svelte';
-	import Menu from './icons/menu.svelte';
-	// import Button from './button.svelte';
-	// import { each } from 'svelte/internal';
+	import Edit from './icons/edit.svelte';
+	import { goto } from '$app/navigation';
 
 	$: if (!$memoStore.loaded) getCards();
-	// $: cardsLen = $memoStore.cartas.length;
-	// $: selectedCards = new Array(cardsLen).fill(false);
-	// $: cartas = $memoStore.cartas;
 
 	export let atividade: Atividade;
 
@@ -26,17 +20,6 @@
 		console.log('cloooose');
 		dispatch('close');
 	};
-
-	// const handleSubmit = () => {
-	// 	dispatch('submit');
-	// 	handleClose();
-	// goto('/educaindigena/memorias');
-	// };
-	// const handleDelete = async (e: Event) => {
-	// 	e.preventDefault();
-	// 	await deleteCard(id);
-	// 	handleClose();
-	// };
 </script>
 
 <div class="overlay" transition:fade={{ duration: 500 }}>
@@ -47,13 +30,12 @@
 			<Close size="20px" color="var(--secondary)" on:click={handleClose} on:keyup={handleClose} />
 		</div>
 		<div class="card">
-			<div class="menu">
-				<Menu size="20px" />
-			</div>
-
 			<h2>
 				{atividade.nome}
 			</h2>
+			<div class="menu">
+				<Edit size="20px" on:click={() => goto(`/prof/edit/${atividade.pin}`)} />
+			</div>
 
 			<p class="pin">{atividade.pin}</p>
 
@@ -124,9 +106,13 @@
 				padding: 16px 24px;
 				flex: 1;
 				overflow: auto;
+				position: relative;
 
 				.menu {
-					text-align: right;
+					position: absolute;
+					top: 16px;
+					right: 16px;
+					cursor: pointer;
 				}
 				h2 {
 					font-weight: 400;

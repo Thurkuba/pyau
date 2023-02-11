@@ -1,10 +1,12 @@
 <script lang="ts">
 	import Breadcrumb from 'src/components/breadcrumb.svelte';
 	import MiniCardMemo from 'src/components/miniCardMemo.svelte';
-	import CardMemo from 'src/components/cardMemo.svelte';
+	import CardMemo from 'src/components/modals/cardMemo.svelte';
 	import CardAdd from 'src/components/cardAdd.svelte';
 	import { getCards, memoStore } from 'src/stores/memoStore';
-	const breadcrumbItems = { text: 'Jogo das Memórias', path: '/educaindigena' };
+	import Box from 'src/components/box.svelte';
+	import { goto } from '$app/navigation';
+	const breadcrumbItems = { text: 'Jogo da Memória', path: '/educaindigena' };
 
 	$: if (!$memoStore.loaded) getCards();
 
@@ -32,38 +34,42 @@
 	const handleClose = () => {
 		cardOpen = false;
 	};
+
+	const handleEdit = () => {
+		goto(`/educaindigena/memorias/edit/${props.id}`);
+	};
 </script>
 
 <Breadcrumb {...breadcrumbItems} />
 
 {#if cardOpen}
-	<CardMemo {...props} on:close={handleClose} />
+	<CardMemo {...props} on:submit={handleEdit} on:close={handleClose} />
 {/if}
-<p>todas as cartas:</p>
 
-<div class="cartas">
-	<CardAdd />
-	{#if $memoStore.loaded}
-		{#each $memoStore.cartas as card (card.id)}
-			<MiniCardMemo
-				nomeguarani={card.nomeguarani}
-				nomept={card.nomept}
-				descricao={card.descricao}
-				imagem={card.imagem}
-				id={card.id}
-				on:click={handleOpen}
-			/>
-		{/each}
-	{/if}
-</div>
+<Box outline title="todas as cartas">
+	<div class="cartas">
+		<CardAdd />
+		{#if $memoStore.loaded}
+			{#each $memoStore.cartas as card (card.id)}
+				<MiniCardMemo
+					nomeguarani={card.nomeguarani}
+					nomept={card.nomept}
+					descricao={card.descricao}
+					imagem={card.imagem}
+					id={card.id}
+					on:click={handleOpen}
+				/>
+			{/each}
+		{/if}
+	</div>
+</Box>
 
 <style lang="scss">
 	.cartas {
-		display: flex;
-		justify-content: left;
-
-		flex-wrap: wrap;
-		gap: 12px;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+		place-items: center;
+		grid-gap: 1rem;
 		padding: 12px;
 	}
 </style>

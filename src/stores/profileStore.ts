@@ -6,36 +6,40 @@ export type ProfileStore = {
 	nome: string;
 	papel: string;
 	uid: string;
+	loaded: boolean;
 };
-const profileStore = writable<ProfileStore>({
+
+const emptyProfile = (loaded: boolean = false): ProfileStore => ({
 	nome: '',
 	papel: '',
-	uid: ''
+	uid: '',
+	loaded
 });
 
+const profileStore = writable<ProfileStore>(emptyProfile());
+
 auth.onAuthStateChanged(async (user) => {
+	console.log('auth changed', user);
 	if (user) {
 		const userId = user?.uid;
 		const docRef = doc(db, 'users', userId);
 		const docSnap = await getDoc(docRef);
 
+		console.log('docSnap', docSnap.exists());
 		if (docSnap.exists()) {
 			profileStore.set({
 				nome: docSnap.data().nome,
 				papel: docSnap.data().papel,
-				uid: userId
+				uid: userId,
+				loaded: true
 			});
-		}
-	}
+		} else profileStore.set(emptyProfile(true));
+	} else profileStore.set(emptyProfile());
 });
 
 const signOut = () => {
 	auth.signOut();
 	console.log('signing out');
-	profileStore.set({
-		nome: '',
-		papel: '',
-		uid: ''
-	});
 };
+
 export { profileStore, signOut };

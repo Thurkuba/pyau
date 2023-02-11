@@ -9,7 +9,8 @@
 	import { db } from 'src/lib/services/firebase';
 	import { content } from 'src/stores/anonymousStore';
 	import type { Carta } from 'src/types/memoria';
-	import CardMemo from '../cardMemo.svelte';
+	import CardMemo from '../modals/cardMemo.svelte';
+	import Placeholder from './placeholder.svelte';
 
 	import SingleCard from './singleCard.svelte';
 
@@ -17,10 +18,14 @@
 	export let pin = '';
 
 	let cartasMem: CartaMem[] = [];
+	$: num = 2 * cartas.length ?? 0;
+
 	$: {
 		cartasMem = cartas?.map((c) => ({ src: c.imagem, matched: false })) ?? [];
-		if (cartasMem.length) shuffledCards();
+		if (num) shuffledCards();
 	}
+	$: numMissing = num === 6 ? 0 : 12 - num;
+	$: missing = new Array(numMissing).fill(1);
 
 	let cards: CartaMem[] = [];
 	let turns = 0;
@@ -68,30 +73,48 @@
 		disabled = false;
 	};
 
+	let atividadeFeita = false;
 	$: {
 		if (cards.length && cards.every((c) => c.matched)) {
 			setTimeout(async () => {
 				if (pin) {
 					const docRef = doc(db, 'atividades', pin);
-					await updateDoc(docRef, { completo: arrayUnion($content) });
-					alert('Yay o/');
+					await updateDoc(docRef, { completo: arrayUnion($content) }).finally(() => {
+						atividadeFeita = true;
+					});
 				} else {
 					goto('/explorar/memoria/play/vitoria');
 				}
 			}, 600);
 		}
 	}
+	$: {
+		if (!foundCard && atividadeFeita) {
+			goto(`/atividade/${pin}/vitoria`);
+		}
+	}
 </script>
 
 <div class="jogo">
-	<div class="card-grid">
-		{#each cards as card (card.id)}
+	<div
+		class:seis={num === 6}
+		class:oito={num === 8}
+		class:dez={num === 10}
+		class:doze={num === 12}
+		class="card-grid"
+	>
+		{#each cards as card, idx (card.id)}
 			<SingleCard
+				{idx}
+				{num}
 				{card}
 				{disabled}
 				{handleChoice}
 				flipped={card === choiceOne || card === choiceTwo || card.matched}
 			/>
+		{/each}
+		{#each missing as _, idx}
+			<Placeholder {idx} {num} />
 		{/each}
 	</div>
 </div>
@@ -109,10 +132,44 @@
 			height: 100%;
 			overflow: hidden;
 			display: grid;
-			grid-template-columns: repeat(3, 1fr);
-			grid-template-rows: repeat(4, 1fr);
-			grid-gap: 20px;
 			align-content: top;
+			&.seis {
+				grid-template-columns: repeat(2, 1fr);
+				grid-template-rows: repeat(3, 1fr);
+				grid-gap: 20px;
+				grid-template-areas:
+					'c1 c2'
+					'c3 c4'
+					'c5 c6';
+			}
+			&.oito,
+			&.dez,
+			&.doze {
+				grid-template-columns: repeat(3, 1fr);
+				grid-template-rows: repeat(4, 1fr);
+				grid-gap: 20px;
+			}
+			&.oito {
+				grid-template-areas:
+					'c1 c2 x1'
+					'x2 c3 c4'
+					'c5 c6 x3'
+					'x4 c7 c8';
+			}
+			&.dez {
+				grid-template-areas:
+					'c1 c2 c3'
+					'c4 c5 c6'
+					'c7 c8 c9'
+					'x1 c10 x2';
+			}
+			&.doze {
+				grid-template-areas:
+					'c1 c2 c3'
+					'c4 c5 c6'
+					'c7 c8 c9'
+					'c10 c11 c12';
+			}
 		}
 	}
 </style>

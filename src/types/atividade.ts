@@ -1,4 +1,4 @@
-export interface Atividade {
+export type Atividade = {
 	completo: string[];
 	config: string[];
 	jogo: 'memoria';
@@ -6,4 +6,4 @@ export interface Atividade {
 	pin: string;
 	prof: string;
 	timestamp: number;
-}
+};

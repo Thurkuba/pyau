@@ -1,15 +1,19 @@
 <script lang="ts">
 	import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-	import { createCard } from 'src/stores/memoStore';
+	import { deleteCard, editCard } from 'src/stores/memoStore';
 	import type { Carta } from 'src/types/memoria';
 	import CardMemo from 'src/components/modals/cardMemo.svelte';
-	import { storage } from 'src/lib/services/firebase';
+	import { db, storage } from 'src/lib/services/firebase';
 	import { getFileExtension } from 'src/lib/helpers/file';
 	import { layoutControl } from 'src/stores/layoutStore';
 	import Breadcrumb from 'src/components/breadcrumb.svelte';
 	import Box from 'src/components/box.svelte';
 	import Add from 'src/components/icons/add.svelte';
 	import { goto } from '$app/navigation';
+	import { doc, getDoc } from 'firebase/firestore';
+	import { page } from '$app/stores';
+	import Remove from 'src/components/icons/remove.svelte';
+	import ConfirmDel from 'src/components/modals/confirmDel.svelte';
 
 	layoutControl.setFooter({ tipo: 'none' });
 
@@ -21,6 +25,26 @@
 		id: ''
 	};
 
+	$: id = $page.params.id;
+
+	const getData = async () => {
+		const cardDoc = doc(db, 'jogos/memoria/cartas', id);
+		const cardSnap = await getDoc(cardDoc);
+		if (cardSnap.exists()) {
+			const data = cardSnap.data();
+			cartaData = {
+				nomeguarani: data.nomeguarani,
+				nomept: data.nomept,
+				descricao: data.descricao,
+				imagem: data.imagem,
+				id: data.id
+			};
+		} else {
+			console.log('No such document!');
+		}
+	};
+	$: console.log(cartaData);
+
 	$: complete =
 		cartaData.nomeguarani && cartaData.nomept && cartaData.descricao && cartaData.imagem;
 
@@ -28,6 +52,11 @@
 	const handleOpen = async (e: Event) => {
 		e.preventDefault();
 		open = true;
+	};
+
+	let openDel = false;
+	const handleOpenDel = () => {
+		openDel = true;
 	};
 
 	let files: FileList;
@@ -77,8 +106,8 @@
 
 	let sucesso = false;
 	const handleSubmit = async () => {
-		console.log('criando carta', cartaData);
-		await createCard(cartaData);
+		console.log('editando carta', cartaData);
+		await editCard(id, cartaData);
 		sucesso = true;
 	};
 	$: if (!open && sucesso) open = true;
@@ -88,7 +117,13 @@
 		if (sucesso) goto('/educaindigena/memorias');
 	};
 
-	const breadcrumbItems = { text: 'criar carta', path: '/educaindigena/memorias' };
+	const handleDel = async () => {
+		await deleteCard(id);
+		openDel = false;
+		goto('/educaindigena/memorias');
+	};
+
+	const breadcrumbItems = { text: 'editar carta', path: '/educaindigena/memorias' };
 
 	let fileInput: HTMLInputElement;
 </script>
@@ -97,38 +132,55 @@
 	<CardMemo {sucesso} criar {...cartaData} on:close={handleClose} on:submit={handleSubmit} />
 {/if}
 
+{#if openDel}
+	<ConfirmDel on:close={() => (openDel = false)} on:submit={handleDel} />
+{/if}
+
 <Breadcrumb {...breadcrumbItems} />
 <Box>
-	<form on:submit={handleOpen}>
-		<label for="text">
-			nome da carta (guarani)
-			<input placeholder="nome da carta (guarani)" type="text" bind:value={cartaData.nomeguarani} />
-		</label>
-		<label for="text">
-			nome da carta (português)
-			<input placeholder="nome da carta (português)" type="text" bind:value={cartaData.nomept} />
-		</label>
-		<label for="text">
-			descrição
-			<textarea rows="5" placeholder="descrição" type="text" bind:value={cartaData.descricao} />
-		</label>
-		<label for="text">
-			imagem
-			<input bind:this={fileInput} class="img" type="file" accept="image/*" bind:files />
-			<button class="add-img" on:click|preventDefault={() => fileInput?.click()}>
-				{#if status !== 'success'}
-					<Add size="42px" fill="var(--primary)" />
-				{:else}
-					<img src={cartaData.imagem} alt="imagem da carta" />
+	{#await getData()}
+		<p>Carregando...</p>
+	{:then}
+		<form on:submit={handleOpen}>
+			<label for="text">
+				nome da carta (guarani)
+				<input
+					placeholder="nome da carta (guarani)"
+					type="text"
+					bind:value={cartaData.nomeguarani}
+				/>
+			</label>
+			<label for="text">
+				nome da carta (português)
+				<input placeholder="nome da carta (português)" type="text" bind:value={cartaData.nomept} />
+			</label>
+			<label for="text">
+				descrição
+				<textarea rows="5" placeholder="descrição" type="text" bind:value={cartaData.descricao} />
+			</label>
+			<label for="text">
+				imagem
+				<input bind:this={fileInput} class="img" type="file" accept="image/*" bind:files />
+				<button class="add-img" on:click|preventDefault={() => fileInput?.click()}>
+					{#if !cartaData.imagem}
+						<Add size="42px" fill="var(--primary)" />
+					{:else}
+						<img src={cartaData.imagem} alt="imagem da carta" />
+					{/if}
+				</button>
+				{#if status === 'running'}
+					<progress max="100" value={progress} />
 				{/if}
-			</button>
-			{#if status === 'running'}
-				<progress max="100" value={progress} />
-			{/if}
-		</label>
+			</label>
 
-		<button disabled={!complete} class="open" on:click={handleOpen}>criar carta</button>
-	</form>
+			<div class="btns">
+				<button class="delete" on:click={handleOpenDel}><Remove /></button>
+				<button disabled={!complete} class="open" on:click={handleOpen}>salvar mudanças</button>
+			</div>
+		</form>
+	{:catch error}
+		<p>{error.message}</p>
+	{/await}
 </Box>
 
 <style lang="scss">
@@ -150,10 +202,22 @@
 		@include text-input($align: left);
 		height: unset;
 	}
-	.open {
-		@include simple-button;
-		width: 100%;
+	.btns {
+		display: flex;
+		justify-content: space-between;
 		margin-top: 24px;
+		button {
+			@include simple-button($filled: true, $shadow: true);
+		}
+
+		.open {
+			width: 75%;
+		}
+		.delete {
+			width: 20%;
+			background-color: var(--danger);
+			border: 1px solid var(--danger);
+		}
 	}
 
 	.add-img {

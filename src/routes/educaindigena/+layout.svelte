@@ -3,11 +3,21 @@
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
 
-	$: if (browser && $profileStore.papel !== 'educaindigena') goto('/');
+	import { layoutControl } from 'src/stores/layoutStore';
+	import authStore from 'src/stores/authStore';
+
+	layoutControl.setHeader({ large: false, back: '' });
+	layoutControl.setFooter({ tipo: 'inicio' });
+
+	$: noAuth = browser && $authStore.loaded && !$authStore.isLoggedIn;
+	$: notEduca = browser && $profileStore.loaded && $profileStore.papel !== 'educaindigena';
+	$: if (noAuth || notEduca) goto('/');
 </script>
 
-{#if $profileStore.papel == 'educaindigena'}
+{#if !$profileStore.loaded}
+	<p>carregando...</p>
+{:else if $profileStore.papel == 'educaindigena'}
 	<slot />
 {:else}
-	redirecionando...
+	<p>redirecionando...</p>
 {/if}

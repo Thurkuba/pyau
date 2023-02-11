@@ -1,27 +1,21 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
-	import addIcon from '$lib/assets/addIcon.png';
+	import Add from './icons/add.svelte';
 </script>
 
-<a href="/educaindigena/memorias/add">
-	<div class="container" in:fly={{ y: 100, duration: 1500 }}>
-		<img src={addIcon} alt="adicionar" />
-	</div>
+<a href="/educaindigena/memorias/add" in:fly={{ y: 100, duration: 1500 }}>
+	<Add size="32px" fill="var(--primary)" />
 </a>
 
 <style lang="scss">
-	.container {
-		border: 1px solid black;
+	a {
 		width: 60px;
-		height: 70px;
-		box-sizing: border-box;
-		padding: 12px;
+		height: 80px;
 		border-radius: 8px;
-		background-color: var(--green-background);
-
-		img {
-			width: 100%;
-			height: 100%;
-		}
+		background-color: var(--secondary);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.1);
 	}
 </style>

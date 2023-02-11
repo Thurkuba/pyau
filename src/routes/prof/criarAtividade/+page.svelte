@@ -4,6 +4,8 @@
 	import { createActivity } from 'src/stores/activitiesStore';
 	import type { Atividade } from 'src/types/atividade';
 	import { goto } from '$app/navigation';
+	import Box from 'src/components/box.svelte';
+	import Breadcrumb from 'src/components/breadcrumb.svelte';
 
 	$: cardsLen = $memoStore.cartas.length;
 	$: selectedCards = new Array(cardsLen).fill(false);
@@ -35,47 +37,61 @@
 		await createActivity(atividade);
 		goto('/');
 	};
+
+	$: num = selectedCards.filter((card) => card).length;
+
+	$: valid = num >= 3 && num <= 6 && !!atividade.nome;
+
+	const breadcrumbItems = { text: 'criar atividade', path: '/prof' };
 </script>
 
-<h2>criar atividade</h2>
+<Breadcrumb {...breadcrumbItems} />
 
-<form>
-	<label for="text">
-		título da atividade
-		<input type="text" bind:value={atividade.nome} placeholder="título" />
-	</label>
-	<label for="text">
-		selecione as cartas
+<input placeholder="nome da atividade" type="text" bind:value={atividade.nome} />
 
-		<div class="cartas">
-			{#if $memoStore.loaded}
-				{#each $memoStore.cartas as card, i}
-					<label for="check">
-						<MiniCardMemo
-							nomeguarani={card.nomeguarani}
-							nomept={card.nomept}
-							descricao={card.descricao}
-							imagem={card.imagem}
-							id={card.id}
-						/>
-						<input type="checkbox" bind:checked={selectedCards[i]} />
-					</label>
-				{/each}
-			{/if}
-		</div>
-	</label>
-</form>
+<Box outline title={`selecionar cartas (3-6): ${num}`}>
+	<form>
+		{#if $memoStore.loaded}
+			{#each $memoStore.cartas as card, i}
+				<label class:selected={selectedCards[i]}>
+					<MiniCardMemo
+						nomeguarani={card.nomeguarani}
+						nomept={card.nomept}
+						descricao={card.descricao}
+						imagem={card.imagem}
+						id={card.id}
+					/>
+					<input type="checkbox" bind:checked={selectedCards[i]} />
+				</label>
+			{/each}
+		{/if}
+	</form>
+</Box>
 
-<!-- {selectedCards} -->
-<button on:click={handleSubmit}>criar</button>
+<button disabled={!valid} on:click={handleSubmit}>criar atividade</button>
 
-<style>
-	.cartas {
+<style lang="scss">
+	form {
 		display: flex;
 		justify-content: left;
-
-		flex-wrap: wrap;
-		gap: 12px;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+		grid-gap: 12px;
+		place-items: center;
 		padding: 12px;
+	}
+	input {
+		@include text-input;
+		&[type='checkbox'] {
+			display: none;
+		}
+	}
+	.selected {
+		border: 2px solid var(--danger);
+		border-radius: 8px;
+	}
+
+	button {
+		@include simple-button($filled: true, $shadow: true);
 	}
 </style>

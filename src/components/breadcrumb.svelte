@@ -1,20 +1,14 @@
 <script lang="ts">
-	import voltaIcon from '$lib/assets/voltaIcon.png';
-	// type BreadcrumbItems = {
-	// 	text: string;
-	// 	path: string;
-	// 	sub: string | null;
-	// };
+	import Back from './icons/back.svelte';
+
 	export let text: string = '';
 	export let path: string = '/';
 	export let sub: string = '';
-
-	// const items = { text: 'Jogo das Memórias', href: '/educaindigena', sub: '' };
 </script>
 
 <a href={path}>
 	<div class="container">
-		<img src={voltaIcon} alt="voltar" class="icon" />
+		<Back size="24px" />
 		<p>{text}</p>
 		{#if sub}
 			{sub}
@@ -24,6 +18,9 @@
 </a>
 
 <style>
+	a {
+		margin-bottom: 24px;
+	}
 	.container {
 		display: flex;
 		justify-content: space-between;
@@ -31,13 +28,11 @@
 		padding: 12px 0;
 	}
 	p {
-		font-size: 20px;
-		color: black;
+		font-size: 24px;
+		font-weight: 400;
+		line-height: 32px;
+		letter-spacing: 0em;
+		color: var(--white-g);
 		margin: 0;
-	}
-	.icon,
-	span {
-		width: 14px;
-		height: 21px;
 	}
 </style>

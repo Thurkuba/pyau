@@ -1,23 +1,36 @@
-@mixin simple-button {
+@mixin simple-button($filled: false, $shadow: false) {
+	@if $filled {
+		background-color: var(--secondary);
+	} @else {
+		background-color: var(--primary);
+	}
+	@if $shadow {
+		box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.1);
+	}
+	color: var(--white-g);
 	font-size: 20px;
 	border: 1px solid var(--secondary);
-	color: var(--white-g);
-	background-color: var(--primary);
 	border-radius: 8px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	height: 48px;
 	cursor: pointer;
+
+	&:disabled {
+		cursor: not-allowed;
+	}
 }
 
-@mixin text-input($align: center, $size: 'medium', $status: 'normal') {
+@mixin text-input($align: left, $size: 'medium', $status: 'normal') {
 	border-radius: 8px;
 	background-color: white;
 	text-align: $align;
 	color: var(--text);
 	height: 48px;
 	width: 100%;
+	padding: 0 16px;
+	box-sizing: border-box;
 
 	@if $status == 'warn' {
 		border: 2px solid var(--warn);
@@ -34,6 +47,11 @@
 	&::placeholder {
 		color: var(--placeholder);
 		opacity: 1;
+		font-size: 16px;
+		font-weight: 400;
+		line-height: 22px;
+		letter-spacing: 0em;
+		text-align: left;
 	}
 }
 

@@ -1,11 +1,13 @@
 <script lang="ts">
 	import Cartas from './icons/cartas.svelte';
 	export let path: string;
+	export let subtexto = 'jogo da';
+	export let texto = 'Memória';
 </script>
 
 <a href={path}>
-	<p>jogo da</p>
-	<h1>Memória</h1>
+	<p>{subtexto}</p>
+	<h1>{texto}</h1>
 	<div class="icon">
 		<Cartas size="42px" color="var(--secondary)" fill="var(--primary)" />
 	</div>
